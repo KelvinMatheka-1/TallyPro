@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1093685558034",
+    "project_id": "tallypro-b581d",
+    "storage_bucket": "tallypro-b581d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093685558034:android:d80cc42be1807a6a1951cb",
+        "android_client_info": {
+          "package_name": "com.mycompany.tallypro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093685558034-3c3b4vhv0fnra3qrjd5kjhi0u993mub1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.tallypro",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "1093685558034-914vmaqr7u8ihp41gdu4kjblmkpbv151.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4nQbysOLse4PXKJZI-h9IGaS5BiEOmgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093685558034-914vmaqr7u8ihp41gdu4kjblmkpbv151.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1093685558034-ppjqs6pgfpicqiea95qa7hduhdkpmi2t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.tallypro"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
