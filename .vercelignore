@@ -1,0 +1,15 @@
+﻿# Native platforms
+android/
+ios/
+windows/
+linux/
+macos/
+
+# Build caches & large files
+build/app/
+build/flutter_assets/
+.dart_tool/
+.git/
+.gradle/
+.idea/
+.vscode/
