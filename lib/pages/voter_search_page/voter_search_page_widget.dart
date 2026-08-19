@@ -3,7 +3,6 @@ import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import '/index.dart';
 import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -61,155 +60,124 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
         key: scaffoldKey,
         backgroundColor: theme.primaryBackground,
         appBar: AppBar(
-          backgroundColor: theme.secondaryBackground,
-          automaticallyImplyLeading: false,
+          backgroundColor: Colors.transparent,
           elevation: 0.0,
-          shape: Border(
-            bottom: BorderSide(
-              color: theme.alternate,
-              width: 1.0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: theme.primaryText,
+              size: 22.0,
             ),
+            onPressed: () => context.pop(),
           ),
-          title: Row(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                icon: Icon(
-                  Icons.arrow_back_rounded,
+              Text(
+                'Voter Roll & Search',
+                style: GoogleFonts.readexPro(
                   color: theme.primaryText,
-                  size: 22.0,
-                ),
-                onPressed: () async {
-                  context.pushNamed(AgentDashWidget.routeName);
-                },
-              ),
-              const SizedBox(width: 4.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Voter Roll & Search',
-                      style: GoogleFonts.readexPro(
-                        color: theme.primaryText,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Stream Voter Register',
-                      style: GoogleFonts.inter(
-                        color: theme.secondaryText,
-                        fontSize: 12.0,
-                      ),
-                    ),
-                  ],
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
-                decoration: BoxDecoration(
-                  color: const Color(0x1960CBEE),
-                  borderRadius: BorderRadius.circular(20.0),
-                  border: Border.all(
-                    color: const Color(0x3360CBEE),
-                    width: 1.0,
-                  ),
-                ),
-                child: Text(
-                  'STREAM',
-                  style: GoogleFonts.inter(
-                    color: const Color(0xFF60CBEE),
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
-                  ),
+              Text(
+                'Stream Register Turnout',
+                style: GoogleFonts.inter(
+                  color: theme.secondaryText,
+                  fontSize: 12.0,
                 ),
               ),
             ],
           ),
+          actions: [
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+              decoration: BoxDecoration(
+                color: theme.primary.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Center(
+                child: Text(
+                  'STREAM',
+                  style: GoogleFonts.inter(
+                    color: theme.primary,
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         body: SafeArea(
           top: true,
           child: Column(
             children: [
-              // Search Input Header Card
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 12.0),
-                decoration: BoxDecoration(
-                  color: theme.secondaryBackground,
-                  border: Border(
-                    bottom: BorderSide(
-                      color: theme.alternate,
-                      width: 1.0,
+              // Search Input Header
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 12.0),
+                child: TextFormField(
+                  controller: _model.textController,
+                  focusNode: _model.textFieldFocusNode,
+                  onChanged: (_) => EasyDebounce.debounce(
+                    '_model.textController',
+                    const Duration(milliseconds: 150),
+                    () => safeSetState(() {}),
+                  ),
+                  style: GoogleFonts.inter(
+                    color: theme.primaryText,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  decoration: InputDecoration(
+                    isDense: true,
+                    hintText: 'Search by Name or National ID...',
+                    hintStyle: GoogleFonts.inter(
+                      color: theme.secondaryText,
+                      fontSize: 13.5,
+                    ),
+                    prefixIcon: Icon(
+                      Icons.search_rounded,
+                      color: theme.primary,
+                      size: 20.0,
+                    ),
+                    suffixIcon: (_model.textController?.text.isNotEmpty ?? false)
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.clear_rounded,
+                              color: theme.secondaryText,
+                              size: 18.0,
+                            ),
+                            onPressed: () {
+                              _model.textController?.clear();
+                              safeSetState(() {});
+                            },
+                          )
+                        : null,
+                    filled: true,
+                    fillColor: theme.secondaryBackground,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: theme.alternate,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(14.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: theme.primary,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(14.0),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12.0,
+                      horizontal: 14.0,
                     ),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _model.textController,
-                      focusNode: _model.textFieldFocusNode,
-                      onChanged: (_) => EasyDebounce.debounce(
-                        '_model.textController',
-                        const Duration(milliseconds: 150),
-                        () => safeSetState(() {}),
-                      ),
-                      style: GoogleFonts.inter(
-                        color: theme.primaryText,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Search by Name or National ID...',
-                        hintStyle: GoogleFonts.inter(
-                          color: theme.secondaryText,
-                          fontSize: 14.0,
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.search_rounded,
-                          color: Color(0xFF60CBEE),
-                          size: 20.0,
-                        ),
-                        suffixIcon: (_model.textController?.text.isNotEmpty ?? false)
-                            ? IconButton(
-                                icon: Icon(
-                                  Icons.clear_rounded,
-                                  color: theme.secondaryText,
-                                  size: 18.0,
-                                ),
-                                onPressed: () {
-                                  _model.textController?.clear();
-                                  safeSetState(() {});
-                                },
-                              )
-                            : null,
-                        filled: true,
-                        fillColor: theme.primaryBackground,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: theme.alternate,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFF60CBEE),
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 12.0,
-                          horizontal: 14.0,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ),
 
@@ -231,13 +199,13 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                     if (!snapshot.hasData) {
                       return Center(
                         child: SizedBox(
-                          width: 44.0,
-                          height: 44.0,
+                          width: 36.0,
+                          height: 36.0,
                           child: CircularProgressIndicator(
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                              Color(0xFF60CBEE),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              theme.primary,
                             ),
-                            strokeWidth: 3.0,
+                            strokeWidth: 2.5,
                           ),
                         ),
                       );
@@ -246,7 +214,6 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                     List<VotersRow> allVoters = snapshot.data!;
                     final searchTerm = _model.textController?.text ?? '';
 
-                    // Filter voters using the corrected filtervoters function
                     final filteredVoters = allVoters.where((voter) {
                       return functions.filtervoters(
                             voter.nationalId,
@@ -263,14 +230,9 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
 
                     return Column(
                       children: [
-                        // Turnout Summary Strip
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                            vertical: 10.0,
-                          ),
-                          color: theme.primaryBackground,
+                        // Turnout Summary Pills
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Row(
                             children: [
                               _buildStatChip(
@@ -298,7 +260,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                 Text(
                                   '${filteredVoters.length} found',
                                   style: GoogleFonts.inter(
-                                    color: const Color(0xFF60CBEE),
+                                    color: theme.primary,
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -306,6 +268,8 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                             ],
                           ),
                         ),
+
+                        const SizedBox(height: 10.0),
 
                         // Voter Items
                         Expanded(
@@ -320,12 +284,12 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                           width: 56.0,
                                           height: 56.0,
                                           decoration: BoxDecoration(
-                                            color: const Color(0x1960CBEE),
+                                            color: theme.primary.withValues(alpha: 0.12),
                                             shape: BoxShape.circle,
                                           ),
-                                          child: const Icon(
+                                          child: Icon(
                                             Icons.search_off_rounded,
-                                            color: Color(0xFF60CBEE),
+                                            color: theme.primary,
                                             size: 28.0,
                                           ),
                                         ),
@@ -359,15 +323,15 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                               _model.textController?.clear();
                                               safeSetState(() {});
                                             },
-                                            icon: const Icon(
+                                            icon: Icon(
                                               Icons.clear_rounded,
                                               size: 16.0,
-                                              color: Color(0xFF60CBEE),
+                                              color: theme.primary,
                                             ),
                                             label: Text(
                                               'Clear Search',
                                               style: GoogleFonts.inter(
-                                                color: const Color(0xFF60CBEE),
+                                                color: theme.primary,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                             ),
@@ -378,7 +342,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                   ),
                                 )
                               : RefreshIndicator(
-                                  color: const Color(0xFF60CBEE),
+                                  color: theme.primary,
                                   backgroundColor: theme.secondaryBackground,
                                   onRefresh: () async {
                                     safeSetState(() =>
@@ -386,10 +350,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                     await _model.waitForRequestCompleted();
                                   },
                                   child: ListView.separated(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0,
-                                      vertical: 12.0,
-                                    ),
+                                    padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 80.0),
                                     itemCount: filteredVoters.length,
                                     separatorBuilder: (_, __) =>
                                         const SizedBox(height: 10.0),
@@ -420,7 +381,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                         decoration: BoxDecoration(
                                           color: theme.secondaryBackground,
                                           borderRadius:
-                                              BorderRadius.circular(14.0),
+                                              BorderRadius.circular(16.0),
                                           border: Border.all(
                                             color: hasVoted
                                                 ? const Color(0x3302CA79)
@@ -432,30 +393,22 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                           children: [
                                             // Avatar Initials
                                             Container(
-                                              width: 44.0,
-                                              height: 44.0,
+                                              width: 42.0,
+                                              height: 42.0,
                                               decoration: BoxDecoration(
                                                 color: hasVoted
                                                     ? const Color(0x1902CA79)
-                                                    : const Color(0x1960CBEE),
+                                                    : theme.primary.withValues(alpha: 0.12),
                                                 shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  color: hasVoted
-                                                      ? const Color(0x4D02CA79)
-                                                      : const Color(0x3360CBEE),
-                                                  width: 1.0,
-                                                ),
                                               ),
                                               child: Center(
                                                 child: Text(
                                                   initials.toUpperCase(),
                                                   style: GoogleFonts.readexPro(
                                                     color: hasVoted
-                                                        ? const Color(
-                                                            0xFF02CA79)
-                                                        : const Color(
-                                                            0xFF60CBEE),
-                                                    fontSize: 14.0,
+                                                        ? const Color(0xFF02CA79)
+                                                        : theme.primary,
+                                                    fontSize: 13.5,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
@@ -479,7 +432,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                                           FontWeight.w600,
                                                     ),
                                                   ),
-                                                  const SizedBox(height: 4.0),
+                                                  const SizedBox(height: 3.0),
                                                   Row(
                                                     children: [
                                                       Container(
@@ -496,12 +449,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
-                                                                      4.0),
-                                                          border: Border.all(
-                                                            color: theme
-                                                                .alternate,
-                                                            width: 1.0,
-                                                          ),
+                                                                      6.0),
                                                         ),
                                                         child: Text(
                                                           'ID: ${voter.nationalId}',
@@ -556,12 +504,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                                           0x1902CA79),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              6.0),
-                                                      border: Border.all(
-                                                        color: const Color(
-                                                            0x4D02CA79),
-                                                        width: 1.0,
-                                                      ),
+                                                              10.0),
                                                     ),
                                                     child: Row(
                                                       mainAxisSize:
@@ -591,7 +534,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                                     ),
                                                   ),
                                                   if (voter.votedAt != null) ...[
-                                                    const SizedBox(height: 4.0),
+                                                    const SizedBox(height: 3.0),
                                                     Text(
                                                       dateTimeFormat(
                                                         'h:mm a',
@@ -600,7 +543,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                                       style: GoogleFonts.inter(
                                                         color:
                                                             theme.secondaryText,
-                                                        fontSize: 11.0,
+                                                        fontSize: 10.5,
                                                       ),
                                                     ),
                                                   ],
@@ -609,7 +552,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                             ] else ...[
                                               SizedBox(
                                                 height: 34.0,
-                                                child: ElevatedButton.icon(
+                                                child: ElevatedButton(
                                                   onPressed: isUpdating
                                                       ? null
                                                       : () async {
@@ -688,38 +631,10 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                                             }
                                                           }
                                                         },
-                                                  icon: isUpdating
-                                                      ? const SizedBox(
-                                                          width: 14.0,
-                                                          height: 14.0,
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            color: Color(
-                                                                0xFF12151C),
-                                                            strokeWidth: 2.0,
-                                                          ),
-                                                        )
-                                                      : const Icon(
-                                                          Icons
-                                                              .how_to_reg_rounded,
-                                                          color: Color(
-                                                              0xFF12151C),
-                                                          size: 16.0,
-                                                        ),
-                                                  label: Text(
-                                                    'Mark Voted',
-                                                    style: GoogleFonts.inter(
-                                                      color: const Color(
-                                                          0xFF12151C),
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                     backgroundColor:
-                                                        const Color(0xFF60CBEE),
+                                                        theme.primary,
                                                     elevation: 0.0,
                                                     padding: const EdgeInsets
                                                         .symmetric(
@@ -729,9 +644,28 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                                         RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8.0),
+                                                              10.0),
                                                     ),
                                                   ),
+                                                  child: isUpdating
+                                                      ? SizedBox(
+                                                          width: 14.0,
+                                                          height: 14.0,
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            color: theme.primaryBackground,
+                                                            strokeWidth: 2.0,
+                                                          ),
+                                                        )
+                                                      : Text(
+                                                          'Mark Voted',
+                                                          style: GoogleFonts.inter(
+                                                            color: theme.primaryBackground,
+                                                            fontSize: 12.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
                                                 ),
                                               ),
                                             ],
@@ -764,7 +698,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
       decoration: BoxDecoration(
         color: theme.secondaryBackground,
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(10.0),
         border: Border.all(
           color: theme.alternate,
           width: 1.0,

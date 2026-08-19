@@ -82,7 +82,7 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
     return Container(
       decoration: BoxDecoration(
         color: theme.secondaryBackground,
-        borderRadius: BorderRadius.circular(14.0),
+        borderRadius: BorderRadius.circular(18.0),
         border: Border.all(
           color: theme.alternate,
           width: 1.0,
@@ -101,18 +101,14 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
                 width: 44.0,
                 height: 44.0,
                 decoration: BoxDecoration(
-                  color: const Color(0x1960CBEE),
+                  color: theme.primary.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: const Color(0x4D60CBEE),
-                    width: 1.0,
-                  ),
                 ),
                 alignment: Alignment.center,
                 child: Text(
                   initialsText,
                   style: GoogleFonts.readexPro(
-                    color: const Color(0xFF60CBEE),
+                    color: theme.primary,
                     fontSize: 15.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -133,32 +129,24 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 4.0),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 7.0,
-                            vertical: 2.0,
-                          ),
-                          decoration: BoxDecoration(
-                            color: theme.primaryBackground,
-                            borderRadius: BorderRadius.circular(6.0),
-                            border: Border.all(
-                              color: theme.alternate,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Text(
-                            widget.party,
-                            style: GoogleFonts.inter(
-                              color: const Color(0xFF60CBEE),
-                              fontSize: 11.5,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                    const SizedBox(height: 3.0),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 7.0,
+                        vertical: 2.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: theme.primaryBackground,
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      child: Text(
+                        widget.party,
+                        style: GoogleFonts.inter(
+                          color: theme.primary,
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
@@ -168,20 +156,15 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
 
           const SizedBox(height: 14.0),
 
-          // Vote Count Input + Recorded Tally + Save Button
+          // Vote Count Input + Save Button
           Container(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
             decoration: BoxDecoration(
               color: theme.primaryBackground,
-              borderRadius: BorderRadius.circular(10.0),
-              border: Border.all(
-                color: theme.alternate,
-                width: 1.0,
-              ),
+              borderRadius: BorderRadius.circular(14.0),
             ),
             child: Row(
               children: [
-                // Input label
                 Text(
                   'Votes:',
                   style: GoogleFonts.inter(
@@ -195,7 +178,7 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
                 // Number Input Field
                 Expanded(
                   child: SizedBox(
-                    height: 40.0,
+                    height: 38.0,
                     child: TextFormField(
                       controller: _model.textController,
                       focusNode: _model.textFieldFocusNode,
@@ -210,7 +193,7 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
                         },
                       ),
                       keyboardType: TextInputType.number,
-                      cursorColor: const Color(0xFF60CBEE),
+                      cursorColor: theme.primary,
                       style: GoogleFonts.readexPro(
                         color: theme.primaryText,
                         fontSize: 15.0,
@@ -218,7 +201,7 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
                       ),
                       decoration: InputDecoration(
                         isDense: true,
-                        hintText: 'Enter ballot count',
+                        hintText: 'Ballot count',
                         hintStyle: GoogleFonts.inter(
                           color: theme.secondaryText,
                           fontSize: 13.0,
@@ -230,18 +213,18 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
                             color: theme.alternate,
                             width: 1.0,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFF60CBEE),
+                          borderSide: BorderSide(
+                            color: theme.primary,
                             width: 1.5,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 10.0,
-                          vertical: 10.0,
+                          vertical: 8.0,
                         ),
                       ),
                     ),
@@ -249,10 +232,10 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
                 ),
                 const SizedBox(width: 8.0),
 
-                // Save / Upsert Button
+                // Save Button
                 SizedBox(
-                  height: 40.0,
-                  child: ElevatedButton.icon(
+                  height: 38.0,
+                  child: ElevatedButton(
                     onPressed: _isSaving
                         ? null
                         : () async {
@@ -335,36 +318,31 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
                               }
                             }
                           },
-                    icon: _isSaving
-                        ? const SizedBox(
-                            width: 14.0,
-                            height: 14.0,
-                            child: CircularProgressIndicator(
-                              color: Color(0xFF12151C),
-                              strokeWidth: 2.0,
-                            ),
-                          )
-                        : const Icon(
-                            Icons.save_rounded,
-                            size: 16.0,
-                            color: Color(0xFF12151C),
-                          ),
-                    label: Text(
-                      'Save',
-                      style: GoogleFonts.inter(
-                        color: const Color(0xFF12151C),
-                        fontSize: 13.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF60CBEE),
+                      backgroundColor: theme.primary,
                       elevation: 0.0,
                       padding: const EdgeInsets.symmetric(horizontal: 14.0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
+                    child: _isSaving
+                        ? SizedBox(
+                            width: 14.0,
+                            height: 14.0,
+                            child: CircularProgressIndicator(
+                              color: theme.primaryBackground,
+                              strokeWidth: 2.0,
+                            ),
+                          )
+                        : Text(
+                            'Save',
+                            style: GoogleFonts.inter(
+                              color: theme.primaryBackground,
+                              fontSize: 13.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ],
@@ -375,3 +353,4 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
     );
   }
 }
+

@@ -57,9 +57,7 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                 width: 44.0,
                 height: 44.0,
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    const Color(0xFF60CBEE),
-                  ),
+                  valueColor: AlwaysStoppedAnimation<Color>(theme.primary),
                   strokeWidth: 3.0,
                 ),
               ),
@@ -77,7 +75,7 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
         final agentName = agentDashAgentDashboardViewRow?.agentName ??
             (currentUserDisplayName.isNotEmpty
                 ? currentUserDisplayName
-                : 'David Kioko (Athi River Agent)');
+                : 'David Kioko');
         final centerName = agentDashAgentDashboardViewRow?.centerName ??
             'Athi River Primary School';
         final centerCode =
@@ -104,275 +102,400 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
             key: scaffoldKey,
             backgroundColor: theme.primaryBackground,
             appBar: AppBar(
-              backgroundColor: theme.secondaryBackground,
-              automaticallyImplyLeading: false,
+              backgroundColor: Colors.transparent,
               elevation: 0.0,
-              shape: Border(
-                bottom: BorderSide(
-                  color: theme.alternate,
-                  width: 1.0,
-                ),
-              ),
+              automaticallyImplyLeading: false,
               title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Brand Logo
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 34.0,
-                        height: 34.0,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF60CBEE),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: const Icon(
-                          Icons.how_to_vote_rounded,
-                          color: Color(0xFF12151C),
-                          size: 20.0,
-                        ),
-                      ),
-                      const SizedBox(width: 10.0),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Tally',
-                              style: GoogleFonts.readexPro(
-                                color: theme.primaryText,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'Pro',
-                              style: GoogleFonts.readexPro(
-                                color: const Color(0xFF60CBEE),
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  // Squircle Brand Badge
+                  Container(
+                    width: 38.0,
+                    height: 38.0,
+                    decoration: BoxDecoration(
+                      color: theme.primary,
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: Icon(
+                      Icons.how_to_vote_rounded,
+                      color: theme.primaryBackground,
+                      size: 22.0,
+                    ),
                   ),
-                  // User Profile & Logout
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 4.0),
-                        decoration: BoxDecoration(
-                          color: const Color(0x1960CBEE),
-                          borderRadius: BorderRadius.circular(20.0),
-                          border: Border.all(
-                            color: const Color(0x3360CBEE),
-                            width: 1.0,
+                  const SizedBox(width: 10.0),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Tally',
+                          style: GoogleFonts.readexPro(
+                            color: theme.primaryText,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 7.0,
-                              height: 7.0,
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF02CA79),
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            const SizedBox(width: 6.0),
-                            Text(
-                              'LIVE',
-                              style: GoogleFonts.inter(
-                                color: const Color(0xFF60CBEE),
-                                fontSize: 11.0,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                          ],
+                        TextSpan(
+                          text: 'Pro',
+                          style: GoogleFonts.readexPro(
+                            color: theme.primary,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 6.0),
-                      // Theme Mode Toggle (Dark / Light)
-                      IconButton(
-                        icon: Icon(
-                          Theme.of(context).brightness == Brightness.dark
-                              ? Icons.light_mode_rounded
-                              : Icons.dark_mode_rounded,
-                          color: theme.primaryText,
-                          size: 20.0,
-                        ),
-                        tooltip: Theme.of(context).brightness == Brightness.dark
-                            ? 'Switch to Light Mode'
-                            : 'Switch to Dark Mode',
-                        onPressed: () {
-                          final isDark =
-                              Theme.of(context).brightness == Brightness.dark;
-                          MyApp.of(context).setThemeMode(
-                              isDark ? ThemeMode.light : ThemeMode.dark);
-                        },
-                      ),
-                      const SizedBox(width: 4.0),
-                      IconButton(
-                        tooltip: 'Log out',
-                        icon: Icon(
-                          Icons.logout_rounded,
-                          color: theme.error,
-                          size: 20.0,
-                        ),
-                        onPressed: () async {
-                          final confirm = await showDialog<bool>(
-                            context: context,
-                            builder: (dialogCtx) => AlertDialog(
-                              backgroundColor: theme.secondaryBackground,
-                              title: Text(
-                                'Sign Out',
-                                style: GoogleFonts.readexPro(
-                                  color: theme.primaryText,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              content: Text(
-                                'Are you sure you want to log out of TallyPro?',
-                                style: GoogleFonts.inter(
-                                  color: theme.secondaryText,
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(dialogCtx, false),
-                                  child: Text(
-                                    'Cancel',
-                                    style: TextStyle(color: theme.secondaryText),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(dialogCtx, true),
-                                  child: const Text(
-                                    'Log Out',
-                                    style: TextStyle(
-                                      color: Color(0xFFE65454),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-
-                          if (confirm == true) {
-                            GoRouter.of(context).prepareAuthEvent();
-                            await authManager.signOut();
-                            GoRouter.of(context).clearRedirectLocation();
-                            if (mounted) {
-                              context.pushNamedAuth(
-                                  SigninCopyWidget.routeName, context.mounted);
-                            }
-                          }
-                        },
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
+              actions: [
+                // Live Badge
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 12.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0x1902CA79),
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(
+                      color: const Color(0x4D02CA79),
+                      width: 1.0,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 6.0,
+                        height: 6.0,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF02CA79),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 5.0),
+                      Text(
+                        'ONLINE',
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFF02CA79),
+                          fontSize: 10.5,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8.0),
+
+                // Theme Mode Switcher
+                IconButton(
+                  icon: Icon(
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Icons.light_mode_rounded
+                        : Icons.dark_mode_rounded,
+                    color: theme.primaryText,
+                    size: 20.0,
+                  ),
+                  tooltip: Theme.of(context).brightness == Brightness.dark
+                      ? 'Switch to Light Mode'
+                      : 'Switch to Dark Mode',
+                  onPressed: () {
+                    final isDark =
+                        Theme.of(context).brightness == Brightness.dark;
+                    MyApp.of(context).setThemeMode(
+                        isDark ? ThemeMode.light : ThemeMode.dark);
+                  },
+                ),
+
+                // Logout Action
+                IconButton(
+                  icon: Icon(
+                    Icons.logout_rounded,
+                    color: theme.secondaryText,
+                    size: 20.0,
+                  ),
+                  tooltip: 'Sign Out',
+                  onPressed: () async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (dialogCtx) => AlertDialog(
+                        backgroundColor: theme.secondaryBackground,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        title: Text(
+                          'Sign Out',
+                          style: GoogleFonts.readexPro(
+                            color: theme.primaryText,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        content: Text(
+                          'Are you sure you want to log out of TallyPro?',
+                          style: GoogleFonts.inter(
+                            color: theme.secondaryText,
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(dialogCtx, false),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(color: theme.secondaryText),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => Navigator.pop(dialogCtx, true),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFE65454),
+                              elevation: 0.0,
+                            ),
+                            child: const Text('Log Out'),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    if (confirm == true) {
+                      GoRouter.of(context).prepareAuthEvent();
+                      await authManager.signOut();
+                      GoRouter.of(context).clearRedirectLocation();
+                      if (mounted) {
+                        context.pushNamedAuth(
+                            SigninCopyWidget.routeName, context.mounted);
+                      }
+                    }
+                  },
+                ),
+                const SizedBox(width: 8.0),
+              ],
             ),
             body: SafeArea(
               top: true,
               child: RefreshIndicator(
-                color: const Color(0xFF60CBEE),
+                color: theme.primary,
                 backgroundColor: theme.secondaryBackground,
                 onRefresh: () async {
                   safeSetState(() {});
                 },
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 20.0,
-                  ),
+                  padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 100.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Agent Welcome Card
+                      // Greeting Row (like Image 1 "Hi Ben! Welcome...")
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Hi $agentName! 👋',
+                                  style: GoogleFonts.readexPro(
+                                    color: theme.primaryText,
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 2.0),
+                                Text(
+                                  '$streamName • $centerName',
+                                  style: GoogleFonts.inter(
+                                    color: theme.secondaryText,
+                                    fontSize: 13.0,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0,
+                              vertical: 4.0,
+                            ),
+                            decoration: BoxDecoration(
+                              color: theme.primary.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Text(
+                              role,
+                              style: GoogleFonts.inter(
+                                color: theme.primary,
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 20.0),
+
+                      // Hero Stream Tally Card (Inspired by Image 1 & 2)
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.all(18.0),
+                        padding: const EdgeInsets.all(22.0),
                         decoration: BoxDecoration(
                           color: theme.secondaryBackground,
-                          borderRadius: BorderRadius.circular(16.0),
+                          borderRadius: BorderRadius.circular(24.0),
                           border: Border.all(
                             color: theme.alternate,
                             width: 1.0,
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.05),
+                              blurRadius: 16.0,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                color: const Color(0x1960CBEE),
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: const Color(0x3360CBEE),
-                                  width: 1.5,
+                            // Card Top Pill Row
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0,
+                                    vertical: 4.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: theme.primaryBackground,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    border: Border.all(
+                                      color: theme.alternate,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.pin_outlined,
+                                        size: 14.0,
+                                        color: theme.secondaryText,
+                                      ),
+                                      const SizedBox(width: 4.0),
+                                      Text(
+                                        'Code: $centerCode',
+                                        style: GoogleFonts.inter(
+                                          color: theme.primaryText,
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.person_rounded,
-                                  color: Color(0xFF60CBEE),
-                                  size: 28.0,
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0,
+                                    vertical: 4.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0x1902CA79),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(
+                                        Icons.check_circle_rounded,
+                                        color: Color(0xFF02CA79),
+                                        size: 13.0,
+                                      ),
+                                      const SizedBox(width: 4.0),
+                                      Text(
+                                        'Active Stream',
+                                        style: GoogleFonts.inter(
+                                          color: const Color(0xFF02CA79),
+                                          fontSize: 11.5,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 20.0),
+
+                            // Big Hero Number (like $12.329,20 in Image 1)
+                            Text(
+                              'REGISTERED STREAM VOTERS',
+                              style: GoogleFonts.inter(
+                                color: theme.secondaryText,
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.8,
                               ),
                             ),
-                            const SizedBox(width: 14.0),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            const SizedBox(height: 4.0),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: [
+                                Text(
+                                  registeredVoters,
+                                  style: GoogleFonts.readexPro(
+                                    color: theme.primaryText,
+                                    fontSize: 38.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 6.0),
+                                Text(
+                                  'voters',
+                                  style: GoogleFonts.inter(
+                                    color: theme.primary,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 16.0),
+
+                            // Sub-Location Breadcrumb Card
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14.0,
+                                vertical: 10.0,
+                              ),
+                              decoration: BoxDecoration(
+                                color: theme.primaryBackground,
+                                borderRadius: BorderRadius.circular(14.0),
+                              ),
+                              child: Row(
                                 children: [
-                                  Text(
-                                    'Karibu,',
-                                    style: GoogleFonts.inter(
-                                      color: theme.secondaryText,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                  Icon(
+                                    Icons.place_outlined,
+                                    color: theme.primary,
+                                    size: 16.0,
                                   ),
-                                  Text(
-                                    agentName,
-                                    style: GoogleFonts.readexPro(
-                                      color: theme.primaryText,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 4.0),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0,
-                                      vertical: 2.0,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0x1460CBEE),
-                                      borderRadius: BorderRadius.circular(6.0),
-                                    ),
+                                  const SizedBox(width: 8.0),
+                                  Expanded(
                                     child: Text(
-                                      role,
+                                      '$wardName Ward • $constName • $countyName County',
                                       style: GoogleFonts.inter(
-                                        color: const Color(0xFF60CBEE),
+                                        color: theme.secondaryText,
                                         fontSize: 12.0,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                       ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ],
@@ -382,223 +505,111 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                         ),
                       ),
 
-                      const SizedBox(height: 16.0),
+                      const SizedBox(height: 18.0),
 
-                      // Assigned Polling Station Card
+                      // Floating Action Capsule Bar (Inspired by Image 1 [ Send | Scan | Request ])
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.all(18.0),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 8.0,
+                        ),
                         decoration: BoxDecoration(
                           color: theme.secondaryBackground,
-                          borderRadius: BorderRadius.circular(16.0),
+                          borderRadius: BorderRadius.circular(20.0),
                           border: Border.all(
                             color: theme.alternate,
                             width: 1.0,
                           ),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            // Card Header
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.location_city_rounded,
-                                      color: Color(0xFF60CBEE),
-                                      size: 20.0,
+                            // Button 1: Search Voters
+                            Expanded(
+                              child: InkWell(
+                                onTap: () => context.pushNamed(
+                                  VoterSearchPageWidget.routeName,
+                                  queryParameters: {
+                                    'streamId': serializeParam(
+                                      agentDashAgentDashboardViewRow?.streamId,
+                                      ParamType.String,
                                     ),
-                                    const SizedBox(width: 8.0),
-                                    Text(
-                                      'Assigned Polling Station',
-                                      style: GoogleFonts.readexPro(
-                                        color: theme.primaryText,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
+                                  }.withoutNulls,
                                 ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0,
-                                    vertical: 3.0,
-                                  ),
+                                borderRadius: BorderRadius.circular(14.0),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 12.0),
                                   decoration: BoxDecoration(
                                     color: theme.primaryBackground,
-                                    borderRadius: BorderRadius.circular(6.0),
-                                    border: Border.all(
-                                      color: theme.alternate,
-                                      width: 1.0,
-                                    ),
+                                    borderRadius: BorderRadius.circular(14.0),
                                   ),
-                                  child: Text(
-                                    'Code: $centerCode',
-                                    style: GoogleFonts.inter(
-                                      color: theme.secondaryText,
-                                      fontSize: 11.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.search_rounded,
+                                        color: theme.primary,
+                                        size: 18.0,
+                                      ),
+                                      const SizedBox(width: 6.0),
+                                      Text(
+                                        'Voter Roll',
+                                        style: GoogleFonts.inter(
+                                          color: theme.primaryText,
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-
-                            const SizedBox(height: 12.0),
-
-                            // Center Name
-                            Text(
-                              centerName,
-                              style: GoogleFonts.inter(
-                                color: theme.primaryText,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600,
                               ),
                             ),
 
-                            const SizedBox(height: 6.0),
+                            const SizedBox(width: 8.0),
 
-                            // Region hierarchy
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.map_outlined,
-                                  color: theme.secondaryText,
-                                  size: 14.0,
+                            // Button 2: Results & Form 34A
+                            Expanded(
+                              child: InkWell(
+                                onTap: () => context.pushNamed(
+                                  BackResultsTallyPageWidget.routeName,
                                 ),
-                                const SizedBox(width: 4.0),
-                                Expanded(
-                                  child: Text(
-                                    '$wardName Ward • $constName • $countyName County',
-                                    style: GoogleFonts.inter(
-                                      color: theme.secondaryText,
-                                      fontSize: 12.5,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                borderRadius: BorderRadius.circular(14.0),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                                  decoration: BoxDecoration(
+                                    color: theme.primary,
+                                    borderRadius: BorderRadius.circular(14.0),
                                   ),
-                                ),
-                              ],
-                            ),
-
-                            const SizedBox(height: 14.0),
-                            Divider(color: theme.alternate, height: 1.0),
-                            const SizedBox(height: 14.0),
-
-                            // Stream & Registered Voters Row
-                            Row(
-                              children: [
-                                // Stream Box
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(12.0),
-                                    decoration: BoxDecoration(
-                                      color: theme.primaryBackground,
-                                      borderRadius:
-                                          BorderRadius.circular(10.0),
-                                      border: Border.all(
-                                        color: theme.alternate,
-                                        width: 1.0,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.assessment_rounded,
+                                        color: theme.primaryBackground,
+                                        size: 18.0,
                                       ),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.ballot_outlined,
-                                              color: Color(0xFF60CBEE),
-                                              size: 15.0,
-                                            ),
-                                            const SizedBox(width: 6.0),
-                                            Text(
-                                              'Stream',
-                                              style: GoogleFonts.inter(
-                                                color: theme.secondaryText,
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
+                                      const SizedBox(width: 6.0),
+                                      Text(
+                                        'Enter Tallies',
+                                        style: GoogleFonts.inter(
+                                          color: theme.primaryBackground,
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        const SizedBox(height: 6.0),
-                                        Text(
-                                          streamName,
-                                          style: GoogleFonts.readexPro(
-                                            color: theme.primaryText,
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 12.0),
-                                // Registered Voters Box
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(12.0),
-                                    decoration: BoxDecoration(
-                                      color: theme.primaryBackground,
-                                      borderRadius:
-                                          BorderRadius.circular(10.0),
-                                      border: Border.all(
-                                        color: theme.alternate,
-                                        width: 1.0,
                                       ),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.people_alt_outlined,
-                                              color: Color(0xFF60CBEE),
-                                              size: 15.0,
-                                            ),
-                                            const SizedBox(width: 6.0),
-                                            Text(
-                                              'Reg. Voters',
-                                              style: GoogleFonts.inter(
-                                                color: theme.secondaryText,
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 6.0),
-                                        Text(
-                                          registeredVoters,
-                                          style: GoogleFonts.readexPro(
-                                            color: const Color(0xFF60CBEE),
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
                           ],
                         ),
                       ),
 
-                      const SizedBox(height: 16.0),
+                      const SizedBox(height: 24.0),
 
-                      // Station Check-In Status Card
+                      // Station Geofence & Check-In Card
                       FutureBuilder<List<AgentCheckinsRow>>(
                         future: AgentCheckinsTable().queryRows(
                           queryFn: (q) => q
@@ -624,7 +635,7 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                             padding: const EdgeInsets.all(18.0),
                             decoration: BoxDecoration(
                               color: theme.secondaryBackground,
-                              borderRadius: BorderRadius.circular(16.0),
+                              borderRadius: BorderRadius.circular(20.0),
                               border: Border.all(
                                 color: isCheckedIn
                                     ? const Color(0x3302CA79)
@@ -641,21 +652,49 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(
-                                          Icons.pin_drop_rounded,
-                                          color: isCheckedIn
-                                              ? const Color(0xFF02CA79)
-                                              : const Color(0xFFFB8C10),
-                                          size: 20.0,
-                                        ),
-                                        const SizedBox(width: 8.0),
-                                        Text(
-                                          'Station Check-In',
-                                          style: GoogleFonts.readexPro(
-                                            color: theme.primaryText,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w600,
+                                        Container(
+                                          width: 36.0,
+                                          height: 36.0,
+                                          decoration: BoxDecoration(
+                                            color: isCheckedIn
+                                                ? const Color(0x1902CA79)
+                                                : const Color(0x19FB8C10),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
                                           ),
+                                          child: Icon(
+                                            isCheckedIn
+                                                ? Icons.pin_drop_rounded
+                                                : Icons.location_searching_rounded,
+                                            color: isCheckedIn
+                                                ? const Color(0xFF02CA79)
+                                                : const Color(0xFFFB8C10),
+                                            size: 20.0,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10.0),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Station Presence',
+                                              style: GoogleFonts.readexPro(
+                                                color: theme.primaryText,
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              isCheckedIn
+                                                  ? 'Location verified'
+                                                  : 'Attendance pending',
+                                              style: GoogleFonts.inter(
+                                                color: theme.secondaryText,
+                                                fontSize: 12.0,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -669,107 +708,36 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                                             ? const Color(0x1902CA79)
                                             : const Color(0x19FB8C10),
                                         borderRadius:
-                                            BorderRadius.circular(20.0),
-                                        border: Border.all(
-                                          color: isCheckedIn
-                                              ? const Color(0x4D02CA79)
-                                              : const Color(0x4DFB8C10),
-                                          width: 1.0,
-                                        ),
+                                            BorderRadius.circular(12.0),
                                       ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(
-                                            isCheckedIn
-                                                ? Icons.check_circle_rounded
-                                                : Icons.access_time_rounded,
-                                            color: isCheckedIn
-                                                ? const Color(0xFF02CA79)
-                                                : const Color(0xFFFB8C10),
-                                            size: 13.0,
-                                          ),
-                                          const SizedBox(width: 4.0),
-                                          Text(
-                                            isCheckedIn
-                                                ? 'Verified & Present'
-                                                : 'Check-In Pending',
-                                            style: GoogleFonts.inter(
-                                              color: isCheckedIn
-                                                  ? const Color(0xFF02CA79)
-                                                  : const Color(0xFFFB8C10),
-                                              fontSize: 11.5,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ],
+                                      child: Text(
+                                        isCheckedIn ? 'Verified' : 'Required',
+                                        style: GoogleFonts.inter(
+                                          color: isCheckedIn
+                                              ? const Color(0xFF02CA79)
+                                              : const Color(0xFFFB8C10),
+                                          fontSize: 11.5,
+                                          fontWeight: FontWeight.w700,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
 
-                                const SizedBox(height: 12.0),
-
-                                if (isCheckedIn) ...[
-                                  Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.all(12.0),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0x0C02CA79),
-                                      borderRadius:
-                                          BorderRadius.circular(10.0),
-                                      border: Border.all(
-                                        color: const Color(0x2602CA79),
-                                        width: 1.0,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.verified_rounded,
-                                          color: Color(0xFF02CA79),
-                                          size: 18.0,
-                                        ),
-                                        const SizedBox(width: 10.0),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Presence verified at station',
-                                                style: GoogleFonts.inter(
-                                                  color: theme.primaryText,
-                                                  fontSize: 13.0,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Checked in: ${checkinRecord?.checkedInAt != null ? dateTimeFormat("d/M/y h:mm a", checkinRecord!.checkedInAt) : "Verified"}',
-                                                style: GoogleFonts.inter(
-                                                  color: theme.secondaryText,
-                                                  fontSize: 12.0,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ] else ...[
+                                if (!isCheckedIn) ...[
+                                  const SizedBox(height: 14.0),
                                   Text(
-                                    'You must confirm your location at the assigned polling station to record attendance.',
+                                    'Confirm your location inside the assigned polling station to activate your agent verification.',
                                     style: GoogleFonts.inter(
                                       color: theme.secondaryText,
-                                      fontSize: 13.0,
+                                      fontSize: 12.5,
                                       height: 1.4,
                                     ),
                                   ),
                                   const SizedBox(height: 14.0),
                                   SizedBox(
                                     width: double.infinity,
-                                    height: 46.0,
+                                    height: 44.0,
                                     child: ElevatedButton.icon(
                                       onPressed: _isCheckingIn
                                           ? null
@@ -798,36 +766,17 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                                                 if (context.mounted) {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
-                                                    SnackBar(
-                                                      content: Row(
-                                                        children: const [
-                                                          Icon(
-                                                            Icons
-                                                                .check_circle_rounded,
-                                                            color:
-                                                                Colors.white,
-                                                            size: 18.0,
-                                                          ),
-                                                          SizedBox(width: 8.0),
-                                                          Text(
-                                                            'Location verified & recorded successfully!',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          ),
-                                                        ],
+                                                    const SnackBar(
+                                                      content: Text(
+                                                        'Location verified & recorded successfully!',
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                       ),
                                                       backgroundColor:
-                                                          const Color(
-                                                              0xFF02CA79),
-                                                      duration:
-                                                          const Duration(
-                                                              milliseconds:
-                                                                  3500),
+                                                          Color(0xFF02CA79),
                                                     ),
                                                   );
                                                 }
@@ -853,39 +802,46 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                                               }
                                             },
                                       icon: _isCheckingIn
-                                          ? const SizedBox(
-                                              width: 18.0,
-                                              height: 18.0,
-                                              child:
-                                                  CircularProgressIndicator(
-                                                color: Color(0xFF12151C),
+                                          ? SizedBox(
+                                              width: 16.0,
+                                              height: 16.0,
+                                              child: CircularProgressIndicator(
+                                                color: theme.primaryBackground,
                                                 strokeWidth: 2.0,
                                               ),
                                             )
-                                          : const Icon(
+                                          : Icon(
                                               Icons.gps_fixed_rounded,
-                                              color: Color(0xFF12151C),
-                                              size: 18.0,
+                                              color: theme.primaryBackground,
+                                              size: 16.0,
                                             ),
                                       label: Text(
                                         _isCheckingIn
                                             ? 'Verifying Location...'
-                                            : 'Verify Location & Check-In',
-                                        style: GoogleFonts.readexPro(
-                                          color: const Color(0xFF12151C),
-                                          fontSize: 14.0,
+                                            : 'Verify Station Location',
+                                        style: GoogleFonts.inter(
+                                          color: theme.primaryBackground,
+                                          fontSize: 13.5,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color(0xFF60CBEE),
+                                        backgroundColor: theme.primary,
                                         elevation: 0.0,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(10.0),
+                                              BorderRadius.circular(12.0),
                                         ),
                                       ),
+                                    ),
+                                  ),
+                                ] else ...[
+                                  const SizedBox(height: 10.0),
+                                  Text(
+                                    'Checked in: ${checkinRecord?.checkedInAt != null ? dateTimeFormat("d/M/y h:mm a", checkinRecord!.checkedInAt) : "Verified at station"}',
+                                    style: GoogleFonts.inter(
+                                      color: theme.secondaryText,
+                                      fontSize: 12.0,
                                     ),
                                   ),
                                 ],
@@ -894,193 +850,6 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                           );
                         },
                       ),
-
-                      const SizedBox(height: 16.0),
-
-                      // Section Title
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4.0, bottom: 10.0),
-                        child: Text(
-                          'Agent Actions',
-                          style: GoogleFonts.readexPro(
-                            color: theme.primaryText,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-
-                      // Action 1: Voter Search & Roll
-                      InkWell(
-                        borderRadius: BorderRadius.circular(16.0),
-                        onTap: () async {
-                          context.pushNamed(
-                            VoterSearchPageWidget.routeName,
-                            queryParameters: {
-                              'streamId': serializeParam(
-                                agentDashAgentDashboardViewRow?.streamId,
-                                ParamType.String,
-                              ),
-                            }.withoutNulls,
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(18.0),
-                          decoration: BoxDecoration(
-                            color: theme.secondaryBackground,
-                            borderRadius: BorderRadius.circular(16.0),
-                            border: Border.all(
-                              color: theme.alternate,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 46.0,
-                                height: 46.0,
-                                decoration: BoxDecoration(
-                                  color: const Color(0x1960CBEE),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                child: const Icon(
-                                  Icons.person_search_rounded,
-                                  color: Color(0xFF60CBEE),
-                                  size: 24.0,
-                                ),
-                              ),
-                              const SizedBox(width: 14.0),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Voter Search & Roll',
-                                      style: GoogleFonts.readexPro(
-                                        color: theme.primaryText,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 3.0),
-                                    Text(
-                                      'Look up voters & track stream turnout',
-                                      style: GoogleFonts.inter(
-                                        color: theme.secondaryText,
-                                        fontSize: 12.5,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 34.0,
-                                height: 34.0,
-                                decoration: BoxDecoration(
-                                  color: theme.primaryBackground,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: theme.alternate,
-                                    width: 1.0,
-                                  ),
-                                ),
-                                child: const Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: Color(0xFF60CBEE),
-                                  size: 14.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 12.0),
-
-                      // Action 2: Results & Tally Entry
-                      InkWell(
-                        borderRadius: BorderRadius.circular(16.0),
-                        onTap: () async {
-                          context.pushNamed(
-                            BackResultsTallyPageWidget.routeName,
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(18.0),
-                          decoration: BoxDecoration(
-                            color: theme.secondaryBackground,
-                            borderRadius: BorderRadius.circular(16.0),
-                            border: Border.all(
-                              color: theme.alternate,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 46.0,
-                                height: 46.0,
-                                decoration: BoxDecoration(
-                                  color: const Color(0x1960CBEE),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                child: const Icon(
-                                  Icons.fact_check_rounded,
-                                  color: Color(0xFF60CBEE),
-                                  size: 24.0,
-                                ),
-                              ),
-                              const SizedBox(width: 14.0),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Results & Tally Entry',
-                                      style: GoogleFonts.readexPro(
-                                        color: theme.primaryText,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 3.0),
-                                    Text(
-                                      'Enter counts & upload statutory forms',
-                                      style: GoogleFonts.inter(
-                                        color: theme.secondaryText,
-                                        fontSize: 12.5,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 34.0,
-                                height: 34.0,
-                                decoration: BoxDecoration(
-                                  color: theme.primaryBackground,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: theme.alternate,
-                                    width: 1.0,
-                                  ),
-                                ),
-                                child: const Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: Color(0xFF60CBEE),
-                                  size: 14.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 40.0),
                     ],
                   ),
                 ),
@@ -1092,3 +861,4 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
     );
   }
 }
+

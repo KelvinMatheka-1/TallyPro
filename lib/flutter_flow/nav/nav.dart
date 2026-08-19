@@ -77,14 +77,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavBarPage() : SigninCopyWidget(),
+      errorBuilder: (context, state) => SigninCopyWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : SigninCopyWidget(),
+          builder: (context, _) => SigninCopyWidget(),
         ),
         FFRoute(
           name: AgentDashWidget.routeName,

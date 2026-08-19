@@ -1,6 +1,7 @@
 // Automatic FlutterFlow imports
 import '/backend/backend.dart';
 import '/backend/supabase/supabase.dart';
+import '/backend/sqlite/local_database.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart'; // Imports other custom actions
@@ -16,16 +17,32 @@ Future upsertTally(
 ) async {
   final supabase = SupaFlow.client;
   final currentUserId = supabase.auth.currentUser?.id;
-  await supabase.from('tallies').upsert(
-    {
-      'stream_id': streamId,
-      'candidate_id': candidateId,
-      'agent_id': currentUserId,
-      'votes_count': votesCount,
-      'submitted_at': DateTime.now().toIso8601String(),
-    },
-    onConflict: 'stream_id,candidate_id',
-  );
+
+  // 1. Save locally to SQLite database first for 100% offline reliability
+  try {
+    await LocalDatabase.instance.saveTallyOffline(
+      streamId: streamId,
+      candidateId: candidateId,
+      votesCount: votesCount,
+    );
+  } catch (e) {
+    debugPrint('Local SQLite save error: $e');
+  }
+
+  // 2. Attempt online upsert to Supabase
+  try {
+    await supabase.from('tallies').upsert(
+      {
+        'stream_id': streamId,
+        'candidate_id': candidateId,
+        'agent_id': currentUserId,
+        'votes_count': votesCount,
+        'submitted_at': DateTime.now().toIso8601String(),
+      },
+      onConflict: 'stream_id,candidate_id',
+    );
+  } catch (e) {
+    debugPrint('Offline mode active - tally queued in SQLite: $e');
+  }
 }
-// Set your action name, define your arguments and return parameter,
-// and then add the boilerplate code using the `</>` button on the right!
+

@@ -52,282 +52,220 @@ class _LogoPollmasterWarPageWidgetState
         key: scaffoldKey,
         backgroundColor: theme.primaryBackground,
         appBar: AppBar(
-          backgroundColor: theme.secondaryBackground,
-          automaticallyImplyLeading: false,
+          backgroundColor: Colors.transparent,
           elevation: 0.0,
-          shape: Border(
-            bottom: BorderSide(
-              color: theme.alternate,
-              width: 1.0,
-            ),
-          ),
+          automaticallyImplyLeading: false,
           title: Row(
             children: [
-              // Logo & Brand
-              Row(
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Tally',
-                          style: GoogleFonts.readexPro(
-                            color: const Color(0xFF60CBEE),
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'Pro',
-                          style: GoogleFonts.readexPro(
-                            color: theme.primaryText,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 8.0),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 3.0,
-                    ),
-                    decoration: BoxDecoration(
-                      color: theme.accent1,
-                      borderRadius: BorderRadius.circular(6.0),
-                      border: Border.all(
-                        color: theme.primary.withValues(alpha: 0.3),
-                        width: 1.0,
-                      ),
-                    ),
-                    child: Text(
-                      'ADMIN',
-                      style: GoogleFonts.inter(
-                        color: theme.primary,
-                        fontSize: 11.0,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-
-              // Theme Mode Toggle (Dark / Light)
-              IconButton(
-                icon: Icon(
-                  Theme.of(context).brightness == Brightness.dark
-                      ? Icons.light_mode_rounded
-                      : Icons.dark_mode_rounded,
-                  color: theme.primaryText,
-                  size: 20.0,
-                ),
-                tooltip: Theme.of(context).brightness == Brightness.dark
-                    ? 'Switch to Light Mode'
-                    : 'Switch to Dark Mode',
-                onPressed: () {
-                  final isDark =
-                      Theme.of(context).brightness == Brightness.dark;
-                  MyApp.of(context).setThemeMode(
-                      isDark ? ThemeMode.light : ThemeMode.dark);
-                },
-              ),
-
-              const SizedBox(width: 4.0),
-
-              // Live Status Badge
+              // Squircle Brand Badge
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+                width: 38.0,
+                height: 38.0,
                 decoration: BoxDecoration(
-                  color: theme.success.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(20.0),
-                  border: Border.all(
-                    color: theme.success.withValues(alpha: 0.3),
-                    width: 1.0,
-                  ),
+                  color: theme.primary,
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                child: Icon(
+                  Icons.how_to_vote_rounded,
+                  color: theme.primaryBackground,
+                  size: 22.0,
+                ),
+              ),
+              const SizedBox(width: 10.0),
+              RichText(
+                text: TextSpan(
                   children: [
-                    Container(
-                      width: 6.0,
-                      height: 6.0,
-                      decoration: BoxDecoration(
-                        color: theme.success,
-                        shape: BoxShape.circle,
+                    TextSpan(
+                      text: 'Tally',
+                      style: GoogleFonts.readexPro(
+                        color: theme.primaryText,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 6.0),
-                    Text(
-                      'LIVE AGGREGATION',
-                      style: GoogleFonts.inter(
-                        color: theme.success,
-                        fontSize: 10.5,
+                    TextSpan(
+                      text: 'Pro',
+                      style: GoogleFonts.readexPro(
+                        color: theme.primary,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
                       ),
                     ),
                   ],
                 ),
               ),
-
               const SizedBox(width: 8.0),
-
-              // Logout Action
-              IconButton(
-                icon: Icon(
-                  Icons.logout_rounded,
-                  color: theme.error,
-                  size: 20.0,
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 3.0,
                 ),
-                tooltip: 'Sign Out',
-                onPressed: () async {
-                  final confirm = await showDialog<bool>(
-                    context: context,
-                    builder: (alertDialogContext) {
-                      return AlertDialog(
-                        backgroundColor: theme.secondaryBackground,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                          side: BorderSide(
-                            color: theme.alternate,
-                            width: 1.0,
-                          ),
-                        ),
-                        title: Text(
-                          'Sign Out',
-                          style: GoogleFonts.readexPro(
-                            color: theme.primaryText,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        content: Text(
-                          'Are you sure you want to sign out of the Admin Dashboard?',
-                          style: GoogleFonts.inter(
-                            color: theme.secondaryText,
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () =>
-                                Navigator.pop(alertDialogContext, false),
-                            child: Text(
-                              'Cancel',
-                              style: GoogleFonts.inter(
-                                color: theme.secondaryText,
-                              ),
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () =>
-                                Navigator.pop(alertDialogContext, true),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: theme.error,
-                              elevation: 0.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                            ),
-                            child: Text(
-                              'Sign Out',
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-
-                  if (confirm == true) {
-                    GoRouter.of(context).prepareAuthEvent();
-                    await authManager.signOut();
-                    GoRouter.of(context).clearRedirectLocation();
-                    if (context.mounted) {
-                      context.pushNamedAuth(
-                          SigninCopyWidget.routeName, context.mounted);
-                    }
-                  }
-                },
+                decoration: BoxDecoration(
+                  color: theme.primary.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Text(
+                  'ADMIN',
+                  style: GoogleFonts.inter(
+                    color: theme.primary,
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.5,
+                  ),
+                ),
               ),
             ],
           ),
+          actions: [
+            // Live Status Badge
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+              decoration: BoxDecoration(
+                color: const Color(0x1902CA79),
+                borderRadius: BorderRadius.circular(20.0),
+                border: Border.all(
+                  color: const Color(0x4D02CA79),
+                  width: 1.0,
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 6.0,
+                    height: 6.0,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF02CA79),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 5.0),
+                  Text(
+                    'LIVE TALLY',
+                    style: GoogleFonts.inter(
+                      color: const Color(0xFF02CA79),
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 6.0),
+
+            // Theme Mode Toggle (Dark / Light)
+            IconButton(
+              icon: Icon(
+                Theme.of(context).brightness == Brightness.dark
+                    ? Icons.light_mode_rounded
+                    : Icons.dark_mode_rounded,
+                color: theme.primaryText,
+                size: 20.0,
+              ),
+              tooltip: Theme.of(context).brightness == Brightness.dark
+                  ? 'Switch to Light Mode'
+                  : 'Switch to Dark Mode',
+              onPressed: () {
+                final isDark =
+                    Theme.of(context).brightness == Brightness.dark;
+                MyApp.of(context).setThemeMode(
+                    isDark ? ThemeMode.light : ThemeMode.dark);
+              },
+            ),
+
+            // Logout Action
+            IconButton(
+              icon: Icon(
+                Icons.logout_rounded,
+                color: theme.secondaryText,
+                size: 20.0,
+              ),
+              tooltip: 'Sign Out',
+              onPressed: () async {
+                final confirm = await showDialog<bool>(
+                  context: context,
+                  builder: (dialogCtx) => AlertDialog(
+                    backgroundColor: theme.secondaryBackground,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    title: Text(
+                      'Sign Out',
+                      style: GoogleFonts.readexPro(
+                        color: theme.primaryText,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    content: Text(
+                      'Are you sure you want to sign out of the Admin Dashboard?',
+                      style: GoogleFonts.inter(
+                        color: theme.secondaryText,
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(dialogCtx, false),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(color: theme.secondaryText),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(dialogCtx, true),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFE65454),
+                          elevation: 0.0,
+                        ),
+                        child: const Text('Sign Out'),
+                      ),
+                    ],
+                  ),
+                );
+
+                if (confirm == true) {
+                  GoRouter.of(context).prepareAuthEvent();
+                  await authManager.signOut();
+                  GoRouter.of(context).clearRedirectLocation();
+                  if (context.mounted) {
+                    context.pushNamedAuth(
+                        SigninCopyWidget.routeName, context.mounted);
+                  }
+                }
+              },
+            ),
+            const SizedBox(width: 8.0),
+          ],
         ),
         body: SafeArea(
           top: true,
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 100.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Top Admin Banner
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: theme.secondaryBackground,
-                    borderRadius: BorderRadius.circular(16.0),
-                    border: Border.all(
-                      color: theme.alternate,
-                      width: 1.0,
-                    ),
+                // Top Greeting & Command Header
+                Text(
+                  'Election Command Center',
+                  style: GoogleFonts.readexPro(
+                    color: theme.primaryText,
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 46.0,
-                        height: 46.0,
-                        decoration: BoxDecoration(
-                          color: theme.accent1,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: theme.primary.withValues(alpha: 0.3),
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Icon(
-                          Icons.dashboard_rounded,
-                          color: theme.primary,
-                          size: 24.0,
-                        ),
-                      ),
-                      const SizedBox(width: 14.0),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Pollmaster Dashboard',
-                              style: GoogleFonts.readexPro(
-                                color: theme.primaryText,
-                                fontSize: 17.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 2.0),
-                            Text(
-                              'Real-Time Tally Aggregation & Stream Auditing',
-                              style: GoogleFonts.inter(
-                                color: theme.secondaryText,
-                                fontSize: 12.5,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                ),
+                const SizedBox(height: 2.0),
+                Text(
+                  'Real-time statutory tallies & Form 34A audit',
+                  style: GoogleFonts.inter(
+                    color: theme.secondaryText,
+                    fontSize: 13.0,
                   ),
                 ),
 
                 const SizedBox(height: 20.0),
 
-                // KPI Overview Cards using Streams Table & Totals Table
+                // Hero KPI Overview Cards
                 FutureBuilder<List<WarRoomCandidateTotalsViewRow>>(
                   future: WarRoomCandidateTotalsViewTable().queryRows(
                     queryFn: (q) => q.order('total_votes', ascending: false),
@@ -356,49 +294,172 @@ class _LogoPollmasterWarPageWidgetState
                                 .toStringAsFixed(1)
                             : '0.0';
 
-                        return Row(
+                        return Column(
                           children: [
-                            // Total Votes Counted
-                            Expanded(
-                              child: _buildKpiCard(
-                                title: 'Total Votes',
-                                value: totalVotesCast.toString(),
-                                subtitle: 'Aggregated Count',
-                                icon: Icons.how_to_vote_rounded,
-                                iconColor: const Color(0xFF60CBEE),
-                                theme: theme,
+                            // Big Hero Card (like Image 1 & 2)
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(22.0),
+                              decoration: BoxDecoration(
+                                color: theme.secondaryBackground,
+                                borderRadius: BorderRadius.circular(24.0),
+                                border: Border.all(
+                                  color: theme.alternate,
+                                  width: 1.0,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.05),
+                                    blurRadius: 16.0,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
                               ),
-                            ),
-                            const SizedBox(width: 10.0),
-
-                            // Streams Reporting
-                            Expanded(
-                              child: _buildKpiCard(
-                                title: 'Reporting',
-                                value: '$lockedStreams / $totalStreams',
-                                subtitle: '$reportingPct% Stations Locked',
-                                icon: Icons.domain_verification_rounded,
-                                iconColor: const Color(0xFF02CA79),
-                                theme: theme,
-                              ),
-                            ),
-                            const SizedBox(width: 10.0),
-
-                            // Leading Candidate
-                            Expanded(
-                              child: _buildKpiCard(
-                                title: 'Leader',
-                                value: leadingCandidate?.candidateName != null
-                                    ? leadingCandidate!.candidateName!
-                                        .split(' ')
-                                        .take(2)
-                                        .join(' ')
-                                    : '—',
-                                subtitle: leadingCandidate?.partyName ??
-                                    'Awaiting data',
-                                icon: Icons.military_tech_rounded,
-                                iconColor: const Color(0xFFFB8C10),
-                                theme: theme,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'TOTAL AGGREGATED VOTES',
+                                        style: GoogleFonts.inter(
+                                          color: theme.secondaryText,
+                                          fontSize: 11.5,
+                                          fontWeight: FontWeight.w600,
+                                          letterSpacing: 0.8,
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0,
+                                          vertical: 4.0,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0x1902CA79),
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        child: Text(
+                                          '$reportingPct% Reported',
+                                          style: GoogleFonts.inter(
+                                            color: const Color(0xFF02CA79),
+                                            fontSize: 11.5,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.baseline,
+                                    textBaseline: TextBaseline.alphabetic,
+                                    children: [
+                                      Text(
+                                        totalVotesCast.toString(),
+                                        style: GoogleFonts.readexPro(
+                                          color: theme.primaryText,
+                                          fontSize: 36.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 6.0),
+                                      Text(
+                                        'ballots',
+                                        style: GoogleFonts.inter(
+                                          color: theme.primary,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  // Nested Sub-Stats Grid
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12.0),
+                                          decoration: BoxDecoration(
+                                            color: theme.primaryBackground,
+                                            borderRadius:
+                                                BorderRadius.circular(14.0),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Leading Candidate',
+                                                style: GoogleFonts.inter(
+                                                  color: theme.secondaryText,
+                                                  fontSize: 11.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 4.0),
+                                              Text(
+                                                leadingCandidate?.candidateName !=
+                                                        null
+                                                    ? leadingCandidate!
+                                                        .candidateName!
+                                                        .split(' ')
+                                                        .take(2)
+                                                        .join(' ')
+                                                    : '—',
+                                                style: GoogleFonts.readexPro(
+                                                  color: theme.primaryText,
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      Expanded(
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12.0),
+                                          decoration: BoxDecoration(
+                                            color: theme.primaryBackground,
+                                            borderRadius:
+                                                BorderRadius.circular(14.0),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Streams Locked',
+                                                style: GoogleFonts.inter(
+                                                  color: theme.secondaryText,
+                                                  fontSize: 11.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 4.0),
+                                              Text(
+                                                '$lockedStreams / $totalStreams',
+                                                style: GoogleFonts.readexPro(
+                                                  color: theme.primaryText,
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -408,23 +469,26 @@ class _LogoPollmasterWarPageWidgetState
                   },
                 ),
 
-                const SizedBox(height: 24.0),
+                const SizedBox(height: 28.0),
 
                 // Section 1: Candidate Leaderboard
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Icon(
-                      Icons.leaderboard_rounded,
-                      color: Color(0xFF60CBEE),
-                      size: 20.0,
-                    ),
-                    const SizedBox(width: 8.0),
                     Text(
-                      'Live Candidate Leaderboard',
+                      'Candidate Tally Standings',
                       style: GoogleFonts.readexPro(
                         color: theme.primaryText,
-                        fontSize: 16.0,
+                        fontSize: 17.0,
                         fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Live Count',
+                      style: GoogleFonts.inter(
+                        color: theme.secondaryText,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
@@ -441,11 +505,11 @@ class _LogoPollmasterWarPageWidgetState
                         child: Padding(
                           padding: const EdgeInsets.all(24.0),
                           child: SizedBox(
-                            width: 36.0,
-                            height: 36.0,
+                            width: 32.0,
+                            height: 32.0,
                             child: CircularProgressIndicator(
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                Color(0xFF60CBEE),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                theme.primary,
                               ),
                               strokeWidth: 2.5,
                             ),
@@ -460,7 +524,7 @@ class _LogoPollmasterWarPageWidgetState
                         padding: const EdgeInsets.all(20.0),
                         decoration: BoxDecoration(
                           color: theme.secondaryBackground,
-                          borderRadius: BorderRadius.circular(14.0),
+                          borderRadius: BorderRadius.circular(16.0),
                           border: Border.all(
                             color: theme.alternate,
                             width: 1.0,
@@ -471,14 +535,13 @@ class _LogoPollmasterWarPageWidgetState
                             'No candidate tally entries yet.',
                             style: GoogleFonts.inter(
                               color: theme.secondaryText,
-                              fontSize: 14.0,
+                              fontSize: 13.5,
                             ),
                           ),
                         ),
                       );
                     }
 
-                    // Compute total votes across all candidates for percentage calculation
                     final totalVotesSum = candidateList.fold<int>(
                       0,
                       (sum, c) => sum + (c.totalVotes ?? 0),
@@ -498,31 +561,30 @@ class _LogoPollmasterWarPageWidgetState
                             ? (votes / totalVotesSum) * 100
                             : 0.0;
 
-                        // Rank color badges
                         Color rankColor;
-                        String rankEmoji;
+                        String rankLabel;
                         if (index == 0) {
                           rankColor = const Color(0xFFFFD700);
-                          rankEmoji = '🥇 1st';
+                          rankLabel = '🥇 Leader';
                         } else if (index == 1) {
                           rankColor = const Color(0xFFC0C0C0);
-                          rankEmoji = '🥈 2nd';
+                          rankLabel = '🥈 2nd';
                         } else if (index == 2) {
                           rankColor = const Color(0xFFCD7F32);
-                          rankEmoji = '🥉 3rd';
+                          rankLabel = '🥉 3rd';
                         } else {
-                          rankColor = const Color(0xFF60CBEE);
-                          rankEmoji = '#${index + 1}';
+                          rankColor = theme.secondaryText;
+                          rankLabel = '#${index + 1}';
                         }
 
                         return Container(
-                          padding: const EdgeInsets.all(14.0),
+                          padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
                             color: theme.secondaryBackground,
-                            borderRadius: BorderRadius.circular(14.0),
+                            borderRadius: BorderRadius.circular(18.0),
                             border: Border.all(
                               color: index == 0
-                                  ? const Color(0x4D60CBEE)
+                                  ? theme.primary.withValues(alpha: 0.4)
                                   : theme.alternate,
                               width: 1.0,
                             ),
@@ -540,17 +602,13 @@ class _LogoPollmasterWarPageWidgetState
                                     ),
                                     decoration: BoxDecoration(
                                       color: theme.primaryBackground,
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      border: Border.all(
-                                        color: rankColor.withValues(alpha: 0.4),
-                                        width: 1.0,
-                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     child: Text(
-                                      rankEmoji,
+                                      rankLabel,
                                       style: GoogleFonts.inter(
                                         color: rankColor,
-                                        fontSize: 11.5,
+                                        fontSize: 11.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -574,7 +632,6 @@ class _LogoPollmasterWarPageWidgetState
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
-                                        const SizedBox(height: 2.0),
                                         Text(
                                           candidate.partyName ??
                                               candidate.partyAcronym ??
@@ -600,11 +657,10 @@ class _LogoPollmasterWarPageWidgetState
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      const SizedBox(height: 2.0),
                                       Text(
                                         '${percentage.toStringAsFixed(1)}%',
                                         style: GoogleFonts.inter(
-                                          color: const Color(0xFF60CBEE),
+                                          color: theme.primary,
                                           fontSize: 12.5,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -614,9 +670,9 @@ class _LogoPollmasterWarPageWidgetState
                                 ],
                               ),
 
-                              const SizedBox(height: 10.0),
+                              const SizedBox(height: 12.0),
 
-                              // Solid Linear Progress Bar (No Gradients)
+                              // Progress Bar
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(4.0),
                                 child: LinearProgressIndicator(
@@ -627,7 +683,7 @@ class _LogoPollmasterWarPageWidgetState
                                   backgroundColor: theme.primaryBackground,
                                   valueColor: AlwaysStoppedAnimation<Color>(
                                     index == 0
-                                        ? const Color(0xFF60CBEE)
+                                        ? theme.primary
                                         : (index == 1
                                             ? const Color(0xFF02CA79)
                                             : const Color(0xFFFB8C10)),
@@ -644,23 +700,16 @@ class _LogoPollmasterWarPageWidgetState
 
                 const SizedBox(height: 28.0),
 
-                // Section 2: Stream Transmission & Form 34A Audit
+                // Section 2: Polling Stream Transmissions & Form 34A Feed
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Icon(
-                      Icons.how_to_vote_rounded,
-                      color: Color(0xFF60CBEE),
-                      size: 20.0,
-                    ),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                      child: Text(
-                        'Polling Streams & Form 34A Audit',
-                        style: GoogleFonts.readexPro(
-                          color: theme.primaryText,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Text(
+                      'Stream Transmissions & Form 34A',
+                      style: GoogleFonts.readexPro(
+                        color: theme.primaryText,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
@@ -680,14 +729,14 @@ class _LogoPollmasterWarPageWidgetState
                   ),
                   decoration: InputDecoration(
                     isDense: true,
-                    hintText: 'Search polling station, ward, or agent...',
+                    hintText: 'Search center, stream, ward, or agent...',
                     hintStyle: GoogleFonts.inter(
                       color: theme.secondaryText,
                       fontSize: 13.0,
                     ),
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.search_rounded,
-                      color: Color(0xFF60CBEE),
+                      color: theme.primary,
                       size: 18.0,
                     ),
                     filled: true,
@@ -697,23 +746,23 @@ class _LogoPollmasterWarPageWidgetState
                         color: theme.alternate,
                         width: 1.0,
                       ),
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(14.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFF60CBEE),
+                      borderSide: BorderSide(
+                        color: theme.primary,
                         width: 1.5,
                       ),
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(14.0),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
-                      vertical: 10.0,
-                      horizontal: 12.0,
+                      vertical: 12.0,
+                      horizontal: 14.0,
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 12.0),
+                const SizedBox(height: 14.0),
 
                 // Audit List FutureBuilder
                 FutureBuilder<List<WarRoomStreamResultsViewRow>>(
@@ -726,11 +775,11 @@ class _LogoPollmasterWarPageWidgetState
                         child: Padding(
                           padding: const EdgeInsets.all(24.0),
                           child: SizedBox(
-                            width: 36.0,
-                            height: 36.0,
+                            width: 32.0,
+                            height: 32.0,
                             child: CircularProgressIndicator(
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                Color(0xFF60CBEE),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                theme.primary,
                               ),
                               strokeWidth: 2.5,
                             ),
@@ -758,7 +807,7 @@ class _LogoPollmasterWarPageWidgetState
                         padding: const EdgeInsets.all(20.0),
                         decoration: BoxDecoration(
                           color: theme.secondaryBackground,
-                          borderRadius: BorderRadius.circular(14.0),
+                          borderRadius: BorderRadius.circular(16.0),
                           border: Border.all(
                             color: theme.alternate,
                             width: 1.0,
@@ -771,7 +820,7 @@ class _LogoPollmasterWarPageWidgetState
                                 : 'No streams match "$_searchFilter".',
                             style: GoogleFonts.inter(
                               color: theme.secondaryText,
-                              fontSize: 14.0,
+                              fontSize: 13.5,
                             ),
                           ),
                         ),
@@ -796,20 +845,20 @@ class _LogoPollmasterWarPageWidgetState
                         String statusLabel;
                         if (isLocked) {
                           statusColor = const Color(0xFF02CA79);
-                          statusLabel = 'Form 34A Received';
+                          statusLabel = 'Form 34A Transmitted';
                         } else if (isPresent) {
                           statusColor = const Color(0xFFFFD939);
-                          statusLabel = 'Agent Active';
+                          statusLabel = 'Agent Present';
                         } else {
                           statusColor = const Color(0xFFFB8C10);
-                          statusLabel = 'Pending Agent';
+                          statusLabel = 'Pending';
                         }
 
                         return Container(
-                          padding: const EdgeInsets.all(14.0),
+                          padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
                             color: theme.secondaryBackground,
-                            borderRadius: BorderRadius.circular(14.0),
+                            borderRadius: BorderRadius.circular(18.0),
                             border: Border.all(
                               color: isLocked
                                   ? const Color(0x3302CA79)
@@ -836,7 +885,7 @@ class _LogoPollmasterWarPageWidgetState
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        const SizedBox(height: 3.0),
+                                        const SizedBox(height: 2.0),
                                         Text(
                                           '${row.wardName ?? 'Ward'}, ${row.constituencyName ?? 'Constituency'}',
                                           style: GoogleFonts.inter(
@@ -850,18 +899,13 @@ class _LogoPollmasterWarPageWidgetState
                                   const SizedBox(width: 8.0),
                                   Container(
                                     padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0,
-                                      vertical: 3.0,
+                                      horizontal: 9.0,
+                                      vertical: 3.5,
                                     ),
                                     decoration: BoxDecoration(
                                       color:
                                           statusColor.withValues(alpha: 0.12),
-                                      borderRadius: BorderRadius.circular(6.0),
-                                      border: Border.all(
-                                        color:
-                                            statusColor.withValues(alpha: 0.4),
-                                        width: 1.0,
-                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     child: Text(
                                       statusLabel,
@@ -875,14 +919,14 @@ class _LogoPollmasterWarPageWidgetState
                                 ],
                               ),
 
-                              const SizedBox(height: 10.0),
+                              const SizedBox(height: 12.0),
 
                               Row(
                                 children: [
-                                  const Icon(
+                                  Icon(
                                     Icons.person_pin_rounded,
                                     size: 15.0,
-                                    color: Color(0xFF60CBEE),
+                                    color: theme.primary,
                                   ),
                                   const SizedBox(width: 6.0),
                                   Text(
@@ -902,7 +946,7 @@ class _LogoPollmasterWarPageWidgetState
                                   ),
                                   if (row.agentPhone != null &&
                                       row.agentPhone!.isNotEmpty) ...[
-                                    const SizedBox(width: 8.0),
+                                    const SizedBox(width: 6.0),
                                     Text(
                                       '(${row.agentPhone})',
                                       style: GoogleFonts.inter(
@@ -927,11 +971,7 @@ class _LogoPollmasterWarPageWidgetState
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          16.0),
-                                                  side: BorderSide(
-                                                    color: theme.alternate,
-                                                    width: 1.0,
-                                                  ),
+                                                          18.0),
                                                 ),
                                                 child: Padding(
                                                   padding:
@@ -969,7 +1009,7 @@ class _LogoPollmasterWarPageWidgetState
                                                       ClipRRect(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(8.0),
+                                                                .circular(12.0),
                                                         child: Image.network(
                                                           row.form34aUrl!,
                                                           fit: BoxFit.contain,
@@ -978,29 +1018,14 @@ class _LogoPollmasterWarPageWidgetState
                                                             if (progress ==
                                                                 null)
                                                               return child;
-                                                            return const Center(
+                                                            return Center(
                                                               child:
                                                                   CircularProgressIndicator(
-                                                                color: Color(
-                                                                    0xFF60CBEE),
+                                                                color: theme
+                                                                    .primary,
                                                               ),
                                                             );
                                                           },
-                                                          errorBuilder: (ctx, _,
-                                                                  __) =>
-                                                              Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(20.0),
-                                                            child: Text(
-                                                              'Could not load Form 34A image.',
-                                                              style: GoogleFonts
-                                                                  .inter(
-                                                                color: theme
-                                                                    .secondaryText,
-                                                              ),
-                                                            ),
-                                                          ),
                                                         ),
                                                       ),
                                                     ],
@@ -1010,15 +1035,15 @@ class _LogoPollmasterWarPageWidgetState
                                             },
                                           );
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.photo_library_rounded,
                                           size: 14.0,
-                                          color: Color(0xFF60CBEE),
+                                          color: theme.primary,
                                         ),
                                         label: Text(
                                           'Form 34A',
                                           style: GoogleFonts.inter(
-                                            color: const Color(0xFF60CBEE),
+                                            color: theme.primary,
                                             fontSize: 11.5,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -1027,10 +1052,10 @@ class _LogoPollmasterWarPageWidgetState
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 8.0),
                                           backgroundColor:
-                                              const Color(0x1960CBEE),
+                                              theme.primary.withValues(alpha: 0.12),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(6.0),
+                                                BorderRadius.circular(8.0),
                                           ),
                                         ),
                                       ),
@@ -1044,77 +1069,10 @@ class _LogoPollmasterWarPageWidgetState
                     );
                   },
                 ),
-
-                const SizedBox(height: 20.0),
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildKpiCard({
-    required String title,
-    required String value,
-    required String subtitle,
-    required IconData icon,
-    required Color iconColor,
-    required FlutterFlowTheme theme,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: theme.secondaryBackground,
-        borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(
-          color: theme.alternate,
-          width: 1.0,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: iconColor, size: 16.0),
-              const SizedBox(width: 6.0),
-              Expanded(
-                child: Text(
-                  title,
-                  style: GoogleFonts.inter(
-                    color: theme.secondaryText,
-                    fontSize: 11.5,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            value,
-            style: GoogleFonts.readexPro(
-              color: theme.primaryText,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: 2.0),
-          Text(
-            subtitle,
-            style: GoogleFonts.inter(
-              color: theme.secondaryText,
-              fontSize: 10.5,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
       ),
     );
   }
