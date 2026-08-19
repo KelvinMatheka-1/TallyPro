@@ -55,6 +55,9 @@ abstract class FlutterFlowTheme {
   late Color warning;
   late Color error;
   late Color info;
+  Color get onPrimary => info;
+  Color get onSecondary => info;
+  Color get onError => info;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
