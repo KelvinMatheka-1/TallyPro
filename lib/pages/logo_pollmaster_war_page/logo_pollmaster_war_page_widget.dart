@@ -3,6 +3,7 @@ import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
+import '/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'logo_pollmaster_war_page_model.dart';
@@ -94,17 +95,17 @@ class _LogoPollmasterWarPageWidgetState
                       vertical: 3.0,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0x19FB8C10),
+                      color: theme.accent1,
                       borderRadius: BorderRadius.circular(6.0),
                       border: Border.all(
-                        color: const Color(0x4DFB8C10),
+                        color: theme.primary.withValues(alpha: 0.3),
                         width: 1.0,
                       ),
                     ),
                     child: Text(
-                      'WAR ROOM',
+                      'ADMIN',
                       style: GoogleFonts.inter(
-                        color: const Color(0xFFFB8C10),
+                        color: theme.primary,
                         fontSize: 11.0,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 0.5,
@@ -115,15 +116,37 @@ class _LogoPollmasterWarPageWidgetState
               ),
               const Spacer(),
 
+              // Theme Mode Toggle (Dark / Light)
+              IconButton(
+                icon: Icon(
+                  Theme.of(context).brightness == Brightness.dark
+                      ? Icons.light_mode_rounded
+                      : Icons.dark_mode_rounded,
+                  color: theme.primaryText,
+                  size: 20.0,
+                ),
+                tooltip: Theme.of(context).brightness == Brightness.dark
+                    ? 'Switch to Light Mode'
+                    : 'Switch to Dark Mode',
+                onPressed: () {
+                  final isDark =
+                      Theme.of(context).brightness == Brightness.dark;
+                  MyApp.of(context).setThemeMode(
+                      isDark ? ThemeMode.light : ThemeMode.dark);
+                },
+              ),
+
+              const SizedBox(width: 4.0),
+
               // Live Status Badge
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
                 decoration: BoxDecoration(
-                  color: const Color(0x1902CA79),
+                  color: theme.success.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(20.0),
                   border: Border.all(
-                    color: const Color(0x4D02CA79),
+                    color: theme.success.withValues(alpha: 0.3),
                     width: 1.0,
                   ),
                 ),
@@ -133,8 +156,8 @@ class _LogoPollmasterWarPageWidgetState
                     Container(
                       width: 6.0,
                       height: 6.0,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF02CA79),
+                      decoration: BoxDecoration(
+                        color: theme.success,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -142,7 +165,7 @@ class _LogoPollmasterWarPageWidgetState
                     Text(
                       'LIVE AGGREGATION',
                       style: GoogleFonts.inter(
-                        color: const Color(0xFF02CA79),
+                        color: theme.success,
                         fontSize: 10.5,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
@@ -152,13 +175,13 @@ class _LogoPollmasterWarPageWidgetState
                 ),
               ),
 
-              const SizedBox(width: 12.0),
+              const SizedBox(width: 8.0),
 
               // Logout Action
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.logout_rounded,
-                  color: Color(0xFFE65454),
+                  color: theme.error,
                   size: 20.0,
                 ),
                 tooltip: 'Sign Out',
@@ -183,7 +206,7 @@ class _LogoPollmasterWarPageWidgetState
                           ),
                         ),
                         content: Text(
-                          'Are you sure you want to sign out of the Admin War Room?',
+                          'Are you sure you want to sign out of the Admin Dashboard?',
                           style: GoogleFonts.inter(
                             color: theme.secondaryText,
                           ),
@@ -203,7 +226,7 @@ class _LogoPollmasterWarPageWidgetState
                             onPressed: () =>
                                 Navigator.pop(alertDialogContext, true),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFE65454),
+                              backgroundColor: theme.error,
                               elevation: 0.0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -261,16 +284,16 @@ class _LogoPollmasterWarPageWidgetState
                         width: 46.0,
                         height: 46.0,
                         decoration: BoxDecoration(
-                          color: const Color(0x1960CBEE),
+                          color: theme.accent1,
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: const Color(0x3360CBEE),
+                            color: theme.primary.withValues(alpha: 0.3),
                             width: 1.0,
                           ),
                         ),
-                        child: const Icon(
-                          Icons.security_rounded,
-                          color: Color(0xFF60CBEE),
+                        child: Icon(
+                          Icons.dashboard_rounded,
+                          color: theme.primary,
                           size: 24.0,
                         ),
                       ),
@@ -280,7 +303,7 @@ class _LogoPollmasterWarPageWidgetState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Pollmaster War Room',
+                              'Pollmaster Dashboard',
                               style: GoogleFonts.readexPro(
                                 color: theme.primaryText,
                                 fontSize: 17.0,
@@ -1022,148 +1045,6 @@ class _LogoPollmasterWarPageWidgetState
                   },
                 ),
 
-                const SizedBox(height: 28.0),
-
-                // Section 3: Quick Navigation Cards for Admin
-                Row(
-                  children: [
-                    // Disbursements Action Card
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          context.pushNamed(
-                            DisbursementmanagerpageColumnScrollablePageWidget
-                                .routeName,
-                          );
-                        },
-                        borderRadius: BorderRadius.circular(12.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(14.0),
-                          decoration: BoxDecoration(
-                            color: theme.secondaryBackground,
-                            borderRadius: BorderRadius.circular(12.0),
-                            border: Border.all(
-                              color: theme.alternate,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 36.0,
-                                height: 36.0,
-                                decoration: BoxDecoration(
-                                  color: const Color(0x1902CA79),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: const Icon(
-                                  Icons.payments_rounded,
-                                  color: Color(0xFF02CA79),
-                                  size: 18.0,
-                                ),
-                              ),
-                              const SizedBox(width: 10.0),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Disbursements',
-                                      style: GoogleFonts.readexPro(
-                                        color: theme.primaryText,
-                                        fontSize: 13.5,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      'M-Pesa agent payouts',
-                                      style: GoogleFonts.inter(
-                                        color: theme.secondaryText,
-                                        fontSize: 11.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 12.0,
-                                color: Color(0xFF60CBEE),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10.0),
-
-                    // Bulk SMS Action Card
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          context.pushNamed(BackToWarPageWidget.routeName);
-                        },
-                        borderRadius: BorderRadius.circular(12.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(14.0),
-                          decoration: BoxDecoration(
-                            color: theme.secondaryBackground,
-                            borderRadius: BorderRadius.circular(12.0),
-                            border: Border.all(
-                              color: theme.alternate,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 36.0,
-                                height: 36.0,
-                                decoration: BoxDecoration(
-                                  color: const Color(0x1960CBEE),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: const Icon(
-                                  Icons.mark_email_read_rounded,
-                                  color: Color(0xFF60CBEE),
-                                  size: 18.0,
-                                ),
-                              ),
-                              const SizedBox(width: 10.0),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Bulk SMS',
-                                      style: GoogleFonts.readexPro(
-                                        color: theme.primaryText,
-                                        fontSize: 13.5,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Voter mobilization',
-                                      style: GoogleFonts.inter(
-                                        color: theme.secondaryText,
-                                        fontSize: 11.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 12.0,
-                                color: Color(0xFF60CBEE),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
                 const SizedBox(height: 20.0),
               ],
             ),

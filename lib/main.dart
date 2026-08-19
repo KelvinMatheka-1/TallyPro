@@ -286,8 +286,8 @@ class _AdminNavBarPageState extends State<AdminNavBarPage> {
           _currentPage = null;
           _currentPageName = tabs.keys.toList()[i];
         }),
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        selectedItemColor: const Color(0xFF60CBEE),
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        selectedItemColor: FlutterFlowTheme.of(context).primary,
         unselectedItemColor: FlutterFlowTheme.of(context).secondaryText,
         selectedBackgroundColor: const Color(0x00000000),
         borderRadius: 8.0,
@@ -306,16 +306,16 @@ class _AdminNavBarPageState extends State<AdminNavBarPage> {
                       ? Icons.dashboard_rounded
                       : Icons.dashboard_outlined,
                   color: validIndex == 0
-                      ? const Color(0xFF60CBEE)
+                      ? FlutterFlowTheme.of(context).primary
                       : FlutterFlowTheme.of(context).secondaryText,
                   size: 24.0,
                 ),
                 Text(
-                  'War Room',
+                  'Dashboard',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: validIndex == 0
-                        ? const Color(0xFF60CBEE)
+                        ? FlutterFlowTheme.of(context).primary
                         : FlutterFlowTheme.of(context).secondaryText,
                     fontSize: 11.0,
                     fontWeight:
@@ -334,7 +334,7 @@ class _AdminNavBarPageState extends State<AdminNavBarPage> {
                       ? Icons.payments_rounded
                       : Icons.payments_outlined,
                   color: validIndex == 1
-                      ? const Color(0xFF60CBEE)
+                      ? FlutterFlowTheme.of(context).primary
                       : FlutterFlowTheme.of(context).secondaryText,
                   size: 24.0,
                 ),
@@ -343,7 +343,7 @@ class _AdminNavBarPageState extends State<AdminNavBarPage> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: validIndex == 1
-                        ? const Color(0xFF60CBEE)
+                        ? FlutterFlowTheme.of(context).primary
                         : FlutterFlowTheme.of(context).secondaryText,
                     fontSize: 11.0,
                     fontWeight:
@@ -362,7 +362,7 @@ class _AdminNavBarPageState extends State<AdminNavBarPage> {
                       ? Icons.mark_email_read_rounded
                       : Icons.mark_email_read_outlined,
                   color: validIndex == 2
-                      ? const Color(0xFF60CBEE)
+                      ? FlutterFlowTheme.of(context).primary
                       : FlutterFlowTheme.of(context).secondaryText,
                   size: 24.0,
                 ),
@@ -371,7 +371,7 @@ class _AdminNavBarPageState extends State<AdminNavBarPage> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: validIndex == 2
-                        ? const Color(0xFF60CBEE)
+                        ? FlutterFlowTheme.of(context).primary
                         : FlutterFlowTheme.of(context).secondaryText,
                     fontSize: 11.0,
                     fontWeight:

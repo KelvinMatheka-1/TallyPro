@@ -3,6 +3,7 @@ import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
+import '/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'agent_dash_model.dart';
@@ -196,12 +197,32 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 10.0),
+                      const SizedBox(width: 6.0),
+                      // Theme Mode Toggle (Dark / Light)
+                      IconButton(
+                        icon: Icon(
+                          Theme.of(context).brightness == Brightness.dark
+                              ? Icons.light_mode_rounded
+                              : Icons.dark_mode_rounded,
+                          color: theme.primaryText,
+                          size: 20.0,
+                        ),
+                        tooltip: Theme.of(context).brightness == Brightness.dark
+                            ? 'Switch to Light Mode'
+                            : 'Switch to Dark Mode',
+                        onPressed: () {
+                          final isDark =
+                              Theme.of(context).brightness == Brightness.dark;
+                          MyApp.of(context).setThemeMode(
+                              isDark ? ThemeMode.light : ThemeMode.dark);
+                        },
+                      ),
+                      const SizedBox(width: 4.0),
                       IconButton(
                         tooltip: 'Log out',
                         icon: Icon(
                           Icons.logout_rounded,
-                          color: theme.secondaryText,
+                          color: theme.error,
                           size: 20.0,
                         ),
                         onPressed: () async {
