@@ -230,3 +230,159 @@ class _NavBarPageState extends State<NavBarPage> {
     );
   }
 }
+
+class AdminNavBarPage extends StatefulWidget {
+  AdminNavBarPage({
+    super.key,
+    this.initialPage,
+    this.page,
+    this.disableResizeToAvoidBottomInset = false,
+  });
+
+  final String? initialPage;
+  final Widget? page;
+  final bool disableResizeToAvoidBottomInset;
+
+  @override
+  _AdminNavBarPageState createState() => _AdminNavBarPageState();
+}
+
+class _AdminNavBarPageState extends State<AdminNavBarPage> {
+  String _currentPageName = 'LogoPollmasterWarPage';
+  late Widget? _currentPage;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPageName = widget.initialPage ?? _currentPageName;
+    _currentPage = widget.page;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = {
+      'LogoPollmasterWarPage': LogoPollmasterWarPageWidget(),
+      'DisbursementmanagerpageColumnScrollablePage':
+          DisbursementmanagerpageColumnScrollablePageWidget(),
+      'BackToWarPage': BackToWarPageWidget(),
+    };
+    final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
+    final validIndex = currentIndex >= 0 ? currentIndex : 0;
+
+    final MediaQueryData queryData = MediaQuery.of(context);
+
+    return Scaffold(
+      resizeToAvoidBottomInset: !widget.disableResizeToAvoidBottomInset,
+      body: MediaQuery(
+        data: queryData
+            .removeViewInsets(removeBottom: true)
+            .removeViewPadding(removeBottom: true),
+        child: _currentPage ?? tabs[_currentPageName]!,
+      ),
+      extendBody: true,
+      bottomNavigationBar: FloatingNavbar(
+        currentIndex: validIndex,
+        onTap: (i) => safeSetState(() {
+          _currentPage = null;
+          _currentPageName = tabs.keys.toList()[i];
+        }),
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        selectedItemColor: const Color(0xFF60CBEE),
+        unselectedItemColor: FlutterFlowTheme.of(context).secondaryText,
+        selectedBackgroundColor: const Color(0x00000000),
+        borderRadius: 8.0,
+        itemBorderRadius: 8.0,
+        margin: const EdgeInsets.all(0.0),
+        padding: const EdgeInsets.all(0.0),
+        width: double.infinity,
+        elevation: 0.0,
+        items: [
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  validIndex == 0
+                      ? Icons.dashboard_rounded
+                      : Icons.dashboard_outlined,
+                  color: validIndex == 0
+                      ? const Color(0xFF60CBEE)
+                      : FlutterFlowTheme.of(context).secondaryText,
+                  size: 24.0,
+                ),
+                Text(
+                  'War Room',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: validIndex == 0
+                        ? const Color(0xFF60CBEE)
+                        : FlutterFlowTheme.of(context).secondaryText,
+                    fontSize: 11.0,
+                    fontWeight:
+                        validIndex == 0 ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  validIndex == 1
+                      ? Icons.payments_rounded
+                      : Icons.payments_outlined,
+                  color: validIndex == 1
+                      ? const Color(0xFF60CBEE)
+                      : FlutterFlowTheme.of(context).secondaryText,
+                  size: 24.0,
+                ),
+                Text(
+                  'Payouts',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: validIndex == 1
+                        ? const Color(0xFF60CBEE)
+                        : FlutterFlowTheme.of(context).secondaryText,
+                    fontSize: 11.0,
+                    fontWeight:
+                        validIndex == 1 ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          FloatingNavbarItem(
+            customWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  validIndex == 2
+                      ? Icons.mark_email_read_rounded
+                      : Icons.mark_email_read_outlined,
+                  color: validIndex == 2
+                      ? const Color(0xFF60CBEE)
+                      : FlutterFlowTheme.of(context).secondaryText,
+                  size: 24.0,
+                ),
+                Text(
+                  'SMS Blast',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: validIndex == 2
+                        ? const Color(0xFF60CBEE)
+                        : FlutterFlowTheme.of(context).secondaryText,
+                    fontSize: 11.0,
+                    fontWeight:
+                        validIndex == 2 ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

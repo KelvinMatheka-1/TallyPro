@@ -396,6 +396,8 @@ class _BackResultsTallyPageWidgetState
                                         return ListView.builder(
                                           padding: EdgeInsets.zero,
                                           shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
                                           scrollDirection: Axis.vertical,
                                           itemCount:
                                               listViewCandidatesRowList.length,
@@ -406,7 +408,7 @@ class _BackResultsTallyPageWidgetState
                                                     listViewIndex];
                                             return Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 5.0),
+                                                  .fromSTEB(0.0, 0.0, 0.0, 12.0),
                                               child: CandidateCardWidget(
                                                 key: Key(
                                                     'Keyp4w_${listViewIndex}_of_${listViewCandidatesRowList.length}'),
@@ -419,9 +421,12 @@ class _BackResultsTallyPageWidgetState
                                                     listViewCandidatesRow.name,
                                                 party: listViewCandidatesRow
                                                     .partyName,
-                                                votes: '24',
+                                                votes: '0',
                                                 candidatIid:
                                                     listViewCandidatesRow.id!,
+                                                streamId:
+                                                    backResultsTallyPageAgentDashboardViewRow
+                                                        ?.streamId,
                                               ),
                                             );
                                           },
@@ -1019,7 +1024,7 @@ class _BackResultsTallyPageWidgetState
                                                                 0.0, 0.0),
                                                         child: FaIcon(
                                                           FontAwesomeIcons
-                                                              .questionCircle,
+                                                              .circleQuestion,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryText,

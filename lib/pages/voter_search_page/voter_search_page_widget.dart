@@ -1,15 +1,12 @@
 import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'voter_search_page_model.dart';
 export 'voter_search_page_model.dart';
@@ -32,14 +29,13 @@ class VoterSearchPageWidget extends StatefulWidget {
 class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
     with TickerProviderStateMixin {
   late VoterSearchPageModel _model;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final Set<String> _updatingVoterIds = {};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => VoterSearchPageModel());
-
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
 
@@ -49,12 +45,13 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = FlutterFlowTheme.of(context);
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -62,773 +59,737 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100.0),
-          child: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-            automaticallyImplyLeading: false,
-            actions: [],
-            flexibleSpace: FlexibleSpaceBar(
-              title: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
+        backgroundColor: theme.primaryBackground,
+        appBar: AppBar(
+          backgroundColor: theme.secondaryBackground,
+          automaticallyImplyLeading: false,
+          elevation: 0.0,
+          shape: Border(
+            bottom: BorderSide(
+              color: theme.alternate,
+              width: 1.0,
+            ),
+          ),
+          title: Row(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.arrow_back_rounded,
+                  color: theme.primaryText,
+                  size: 22.0,
+                ),
+                onPressed: () async {
+                  context.pushNamed(AgentDashWidget.routeName);
+                },
+              ),
+              const SizedBox(width: 4.0),
+              Expanded(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 0.0, 0.0),
-                            child: FlutterFlowIconButton(
-                              borderColor: Colors.transparent,
-                              borderRadius: 30.0,
-                              borderWidth: 1.0,
-                              buttonSize: 50.0,
-                              icon: Icon(
-                                Icons.arrow_back_rounded,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 30.0,
-                              ),
-                              onPressed: () async {
-                                context.pushNamed(AgentDashWidget.routeName);
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Voter Search',
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineMedium
-                                  .override(
-                                    font: GoogleFonts.readexPro(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .fontStyle,
-                                    ),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 22.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .fontStyle,
-                                  ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    5.0, 0.0, 0.0, 0.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    GoRouter.of(context).prepareAuthEvent();
-                                    await authManager.signOut();
-                                    GoRouter.of(context)
-                                        .clearRedirectLocation();
-
-                                    context.pushNamedAuth(
-                                        SigninCopyWidget.routeName,
-                                        context.mounted);
-                                  },
-                                  child: Container(
-                                    width: 40.0,
-                                    height: 40.0,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Image.asset(
-                                      'assets/images/letter-a.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                    Text(
+                      'Voter Roll & Search',
+                      style: GoogleFonts.readexPro(
+                        color: theme.primaryText,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Stream Voter Register',
+                      style: GoogleFonts.inter(
+                        color: theme.secondaryText,
+                        fontSize: 12.0,
                       ),
                     ),
                   ],
                 ),
               ),
-              centerTitle: true,
-              expandedTitleScale: 1.0,
-            ),
-            elevation: 2.0,
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+                decoration: BoxDecoration(
+                  color: const Color(0x1960CBEE),
+                  borderRadius: BorderRadius.circular(20.0),
+                  border: Border.all(
+                    color: const Color(0x3360CBEE),
+                    width: 1.0,
+                  ),
+                ),
+                child: Text(
+                  'STREAM',
+                  style: GoogleFonts.inter(
+                    color: const Color(0xFF60CBEE),
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         body: SafeArea(
           top: true,
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
-                  child: TextFormField(
-                    controller: _model.textController,
-                    focusNode: _model.textFieldFocusNode,
-                    onChanged: (_) => EasyDebounce.debounce(
-                      '_model.textController',
-                      Duration(milliseconds: 300),
-                      () => safeSetState(() {}),
+          child: Column(
+            children: [
+              // Search Input Header Card
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 12.0),
+                decoration: BoxDecoration(
+                  color: theme.secondaryBackground,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: theme.alternate,
+                      width: 1.0,
                     ),
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      isDense: false,
-                      labelText: 'Search...',
-                      labelStyle:
-                          FlutterFlowTheme.of(context).labelMedium.override(
-                                font: GoogleFonts.inter(
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontStyle,
-                                ),
-                                letterSpacing: 0.0,
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .fontStyle,
-                              ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primary,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                      prefixIcon: Icon(
-                        Icons.search_outlined,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                      ),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
-                    maxLines: null,
-                    validator:
-                        _model.textControllerValidator.asValidator(context),
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
-                    child: FutureBuilder<List<VotersRow>>(
-                      future: (_model.requestCompleter ??=
-                              Completer<List<VotersRow>>()
-                                ..complete(VotersTable().queryRows(
-                                  queryFn: (q) => q
-                                      .eqOrNull(
-                                        'stream_id',
-                                        widget.streamId,
-                                      )
-                                      .order('full_name', ascending: true),
-                                )))
-                          .future,
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _model.textController,
+                      focusNode: _model.textFieldFocusNode,
+                      onChanged: (_) => EasyDebounce.debounce(
+                        '_model.textController',
+                        const Duration(milliseconds: 150),
+                        () => safeSetState(() {}),
+                      ),
+                      style: GoogleFonts.inter(
+                        color: theme.primaryText,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Search by Name or National ID...',
+                        hintStyle: GoogleFonts.inter(
+                          color: theme.secondaryText,
+                          fontSize: 14.0,
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.search_rounded,
+                          color: Color(0xFF60CBEE),
+                          size: 20.0,
+                        ),
+                        suffixIcon: (_model.textController?.text.isNotEmpty ?? false)
+                            ? IconButton(
+                                icon: Icon(
+                                  Icons.clear_rounded,
+                                  color: theme.secondaryText,
+                                  size: 18.0,
                                 ),
-                              ),
-                            ),
-                          );
-                        }
-                        List<VotersRow> listViewVotersRowList = snapshot.data!;
+                                onPressed: () {
+                                  _model.textController?.clear();
+                                  safeSetState(() {});
+                                },
+                              )
+                            : null,
+                        filled: true,
+                        fillColor: theme.primaryBackground,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: theme.alternate,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0xFF60CBEE),
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 14.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
-                        return ListView.builder(
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.vertical,
-                          itemCount: listViewVotersRowList.length,
-                          itemBuilder: (context, listViewIndex) {
-                            final listViewVotersRow =
-                                listViewVotersRowList[listViewIndex];
-                            return Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 1.0),
-                              child: Container(
-                                width: 100.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 0.0,
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      offset: Offset(
-                                        0.0,
-                                        1.0,
-                                      ),
-                                    )
-                                  ],
+              // Voters List with FutureBuilder
+              Expanded(
+                child: FutureBuilder<List<VotersRow>>(
+                  future: (_model.requestCompleter ??=
+                          Completer<List<VotersRow>>()
+                            ..complete(VotersTable().queryRows(
+                              queryFn: (q) => q
+                                  .eqOrNull(
+                                    'stream_id',
+                                    widget.streamId,
+                                  )
+                                  .order('full_name', ascending: true),
+                            )))
+                      .future,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 44.0,
+                          height: 44.0,
+                          child: CircularProgressIndicator(
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                              Color(0xFF60CBEE),
+                            ),
+                            strokeWidth: 3.0,
+                          ),
+                        ),
+                      );
+                    }
+
+                    List<VotersRow> allVoters = snapshot.data!;
+                    final searchTerm = _model.textController?.text ?? '';
+
+                    // Filter voters using the corrected filtervoters function
+                    final filteredVoters = allVoters.where((voter) {
+                      return functions.filtervoters(
+                            voter.nationalId,
+                            voter.fullName,
+                            searchTerm,
+                          ) ??
+                          true;
+                    }).toList();
+
+                    final totalCount = allVoters.length;
+                    final votedCount =
+                        allVoters.where((v) => v.hasVoted == true).length;
+                    final pendingCount = totalCount - votedCount;
+
+                    return Column(
+                      children: [
+                        // Turnout Summary Strip
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 10.0,
+                          ),
+                          color: theme.primaryBackground,
+                          child: Row(
+                            children: [
+                              _buildStatChip(
+                                label: 'Total',
+                                value: '$totalCount',
+                                color: theme.secondaryText,
+                                theme: theme,
+                              ),
+                              const SizedBox(width: 8.0),
+                              _buildStatChip(
+                                label: 'Voted',
+                                value: '$votedCount',
+                                color: const Color(0xFF02CA79),
+                                theme: theme,
+                              ),
+                              const SizedBox(width: 8.0),
+                              _buildStatChip(
+                                label: 'Pending',
+                                value: '$pendingCount',
+                                color: const Color(0xFFFB8C10),
+                                theme: theme,
+                              ),
+                              const Spacer(),
+                              if (searchTerm.isNotEmpty)
+                                Text(
+                                  '${filteredVoters.length} found',
+                                  style: GoogleFonts.inter(
+                                    color: const Color(0xFF60CBEE),
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                            ],
+                          ),
+                        ),
+
+                        // Voter Items
+                        Expanded(
+                          child: filteredVoters.isEmpty
+                              ? Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(24.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          width: 56.0,
+                                          height: 56.0,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0x1960CBEE),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(
+                                            Icons.search_off_rounded,
+                                            color: Color(0xFF60CBEE),
+                                            size: 28.0,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 12.0),
+                                        Text(
+                                          searchTerm.isEmpty
+                                              ? 'No voters in this stream'
+                                              : 'No voters match "$searchTerm"',
+                                          style: GoogleFonts.readexPro(
+                                            color: theme.primaryText,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        const SizedBox(height: 6.0),
+                                        Text(
+                                          searchTerm.isEmpty
+                                              ? 'Voter records allocated to this stream will appear here.'
+                                              : 'Check the spelling of the name or national ID and try again.',
+                                          style: GoogleFonts.inter(
+                                            color: theme.secondaryText,
+                                            fontSize: 13.0,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        if (searchTerm.isNotEmpty) ...[
+                                          const SizedBox(height: 14.0),
+                                          TextButton.icon(
+                                            onPressed: () {
+                                              _model.textController?.clear();
+                                              safeSetState(() {});
+                                            },
+                                            icon: const Icon(
+                                              Icons.clear_rounded,
+                                              size: 16.0,
+                                              color: Color(0xFF60CBEE),
+                                            ),
+                                            label: Text(
+                                              'Clear Search',
+                                              style: GoogleFonts.inter(
+                                                color: const Color(0xFF60CBEE),
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : RefreshIndicator(
+                                  color: const Color(0xFF60CBEE),
+                                  backgroundColor: theme.secondaryBackground,
+                                  onRefresh: () async {
+                                    safeSetState(() =>
+                                        _model.requestCompleter = null);
+                                    await _model.waitForRequestCompleted();
+                                  },
+                                  child: ListView.separated(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                      vertical: 12.0,
+                                    ),
+                                    itemCount: filteredVoters.length,
+                                    separatorBuilder: (_, __) =>
+                                        const SizedBox(height: 10.0),
+                                    itemBuilder: (context, index) {
+                                      final voter = filteredVoters[index];
+                                      final hasVoted = voter.hasVoted == true;
+                                      final isUpdating =
+                                          _updatingVoterIds.contains(voter.id);
+
+                                      // Initials for avatar
+                                      final names = voter.fullName
+                                          .trim()
+                                          .split(' ')
+                                          .where((n) => n.isNotEmpty)
+                                          .toList();
+                                      final initials = names.isNotEmpty
+                                          ? (names.length >= 2
+                                              ? '${names[0][0]}${names[1][0]}'
+                                              : names[0].substring(
+                                                  0,
+                                                  names[0].length >= 2
+                                                      ? 2
+                                                      : 1))
+                                          : 'V';
+
+                                      return Container(
+                                        padding: const EdgeInsets.all(14.0),
+                                        decoration: BoxDecoration(
+                                          color: theme.secondaryBackground,
+                                          borderRadius:
+                                              BorderRadius.circular(14.0),
+                                          border: Border.all(
+                                            color: hasVoted
+                                                ? const Color(0x3302CA79)
+                                                : theme.alternate,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        child: Row(
                                           children: [
-                                            if (functions.filtervoters(
-                                                    listViewVotersRow
-                                                        .nationalId,
-                                                    listViewVotersRow.fullName,
-                                                    _model
-                                                        .textController.text) ??
-                                                true)
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 12.0, 16.0, 16.0),
-                                                child: Container(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          1.0,
-                                                  height: 121.0,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        blurRadius: 12.0,
-                                                        color:
-                                                            Color(0x34000000),
-                                                        offset: Offset(
-                                                          -2.0,
-                                                          5.0,
-                                                        ),
-                                                      )
-                                                    ],
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
+                                            // Avatar Initials
+                                            Container(
+                                              width: 44.0,
+                                              height: 44.0,
+                                              decoration: BoxDecoration(
+                                                color: hasVoted
+                                                    ? const Color(0x1902CA79)
+                                                    : const Color(0x1960CBEE),
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                  color: hasVoted
+                                                      ? const Color(0x4D02CA79)
+                                                      : const Color(0x3360CBEE),
+                                                  width: 1.0,
+                                                ),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  initials.toUpperCase(),
+                                                  style: GoogleFonts.readexPro(
+                                                    color: hasVoted
+                                                        ? const Color(
+                                                            0xFF02CA79)
+                                                        : const Color(
+                                                            0xFF60CBEE),
+                                                    fontSize: 14.0,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(8.0, 8.0,
-                                                                12.0, 8.0),
+                                                ),
+                                              ),
+                                            ),
+
+                                            const SizedBox(width: 12.0),
+
+                                            // Voter details
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    voter.fullName,
+                                                    style: GoogleFonts.readexPro(
+                                                      color: theme.primaryText,
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 4.0),
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                          horizontal: 6.0,
+                                                          vertical: 2.0,
+                                                        ),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: theme
+                                                              .primaryBackground,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      4.0),
+                                                          border: Border.all(
+                                                            color: theme
+                                                                .alternate,
+                                                            width: 1.0,
+                                                          ),
+                                                        ),
+                                                        child: Text(
+                                                          'ID: ${voter.nationalId}',
+                                                          style:
+                                                              GoogleFonts.inter(
+                                                            color: theme
+                                                                .secondaryText,
+                                                            fontSize: 11.5,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      if (voter.phoneNumber !=
+                                                              null &&
+                                                          voter.phoneNumber!
+                                                              .isNotEmpty) ...[
+                                                        const SizedBox(
+                                                            width: 6.0),
+                                                        Text(
+                                                          voter.phoneNumber!,
+                                                          style:
+                                                              GoogleFonts.inter(
+                                                            color: theme
+                                                                .secondaryText,
+                                                            fontSize: 11.5,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+
+                                            const SizedBox(width: 8.0),
+
+                                            // Status and Action
+                                            if (hasVoted) ...[
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Container(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                      horizontal: 8.0,
+                                                      vertical: 4.0,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0x1902CA79),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              6.0),
+                                                      border: Border.all(
+                                                        color: const Color(
+                                                            0x4D02CA79),
+                                                        width: 1.0,
+                                                      ),
+                                                    ),
                                                     child: Row(
                                                       mainAxisSize:
-                                                          MainAxisSize.max,
+                                                          MainAxisSize.min,
                                                       children: [
-                                                        Container(
-                                                          width: 4.0,
-                                                          height:
-                                                              double.infinity,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0xFF60CBEE),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        4.0),
-                                                          ),
+                                                        const Icon(
+                                                          Icons
+                                                              .check_circle_rounded,
+                                                          color: Color(
+                                                              0xFF02CA79),
+                                                          size: 13.0,
                                                         ),
-                                                        Expanded(
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        12.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Column(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Text(
-                                                                  'Voter Details',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .plusJakartaSans(
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: Color(
-                                                                            0xFF4B39EF),
-                                                                        fontSize:
-                                                                            14.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                ),
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  child: Text(
-                                                                    listViewVotersRow
-                                                                        .fullName,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .headlineSmall
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.outfit(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).headlineSmall.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              Color(0xFF14181B),
-                                                                          fontSize:
-                                                                              16.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .headlineSmall
-                                                                              .fontStyle,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  child: Text(
-                                                                    listViewVotersRow
-                                                                        .nationalId,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .labelMedium
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.plusJakartaSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).labelMedium.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .labelMedium
-                                                                              .fontStyle,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 100.0,
-                                                          child:
-                                                              VerticalDivider(
-                                                            thickness: 2.0,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .alternate,
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      12.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              Text(
-                                                                'Status',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .plusJakartaSans(
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .labelSmall
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: Color(
-                                                                          0xFF57636C),
-                                                                      fontSize:
-                                                                          12.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .labelSmall
-                                                                          .fontStyle,
-                                                                    ),
-                                                              ),
-                                                              Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .end,
-                                                                children: [
-                                                                  Text(
-                                                                    'Voted:',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .labelSmall
-                                                                        .override(
-                                                                          font:
-                                                                              GoogleFonts.plusJakartaSans(
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).labelSmall.fontStyle,
-                                                                          ),
-                                                                          color:
-                                                                              Color(0xFF57636C),
-                                                                          fontSize:
-                                                                              12.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .labelSmall
-                                                                              .fontStyle,
-                                                                        ),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    child: Text(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        listViewVotersRow
-                                                                            .hasVoted
-                                                                            ?.toString(),
-                                                                        'unknown',
-                                                                      ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            font:
-                                                                                GoogleFonts.inter(
-                                                                              fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                            ),
-                                                                            color:
-                                                                                valueOrDefault<Color>(
-                                                                              listViewVotersRow.hasVoted! ? FlutterFlowTheme.of(context).success : FlutterFlowTheme.of(context).error,
-                                                                              Color(0xFF474747),
-                                                                            ),
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                            fontStyle:
-                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            4.0,
-                                                                            0.0,
-                                                                            8.0),
-                                                                child: Text(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    listViewVotersRow
-                                                                        .votedAt
-                                                                        ?.toString(),
-                                                                    'Time',
-                                                                  ),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .labelMedium
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .plusJakartaSans(
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .labelMedium
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: Color(
-                                                                            0xFF57636C),
-                                                                        fontSize:
-                                                                            14.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .labelMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                              FFButtonWidget(
-                                                                onPressed: (listViewVotersRow
-                                                                            .hasVoted ==
-                                                                        true)
-                                                                    ? null
-                                                                    : () async {
-                                                                        await VotersTable()
-                                                                            .update(
-                                                                          data: {
-                                                                            'has_voted':
-                                                                                true,
-                                                                            'marked_by_agent_id':
-                                                                                currentUserUid,
-                                                                            'voted_at':
-                                                                                supaSerialize<DateTime>(getCurrentTimestamp),
-                                                                          },
-                                                                          matchingRows: (rows) =>
-                                                                              rows.eqOrNull(
-                                                                            'id',
-                                                                            listViewVotersRow.id,
-                                                                          ),
-                                                                        );
-                                                                        ScaffoldMessenger.of(context)
-                                                                            .showSnackBar(
-                                                                          SnackBar(
-                                                                            content:
-                                                                                Text(
-                                                                              'Voter checked in and marked as voted.',
-                                                                              style: TextStyle(
-                                                                                color: FlutterFlowTheme.of(context).primaryText,
-                                                                              ),
-                                                                            ),
-                                                                            duration:
-                                                                                Duration(milliseconds: 4000),
-                                                                            backgroundColor:
-                                                                                FlutterFlowTheme.of(context).secondary,
-                                                                          ),
-                                                                        );
-                                                                        safeSetState(() =>
-                                                                            _model.requestCompleter =
-                                                                                null);
-                                                                        await _model
-                                                                            .waitForRequestCompleted();
-                                                                      },
-                                                                text: '',
-                                                                icon: FaIcon(
-                                                                  FontAwesomeIcons
-                                                                      .userCheck,
-                                                                  size: 16.0,
-                                                                ),
-                                                                options:
-                                                                    FFButtonOptions(
-                                                                  height: 27.2,
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          16.0,
-                                                                          0.0,
-                                                                          16.0,
-                                                                          0.0),
-                                                                  iconAlignment:
-                                                                      IconAlignment
-                                                                          .start,
-                                                                  iconPadding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          10.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  color: Color(
-                                                                      0xFF60CBEE),
-                                                                  textStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .inter(
-                                                                          fontWeight: FlutterFlowTheme.of(context)
-                                                                              .titleSmall
-                                                                              .fontWeight,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .titleSmall
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        color: Colors
-                                                                            .white,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight: FlutterFlowTheme.of(context)
-                                                                            .titleSmall
-                                                                            .fontWeight,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .titleSmall
-                                                                            .fontStyle,
-                                                                      ),
-                                                                  elevation:
-                                                                      0.0,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8.0),
-                                                                  disabledColor:
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .success,
-                                                                ),
-                                                              ),
-                                                            ],
+                                                        const SizedBox(
+                                                            width: 4.0),
+                                                        Text(
+                                                          'VOTED',
+                                                          style:
+                                                              GoogleFonts.inter(
+                                                            color: const Color(
+                                                                0xFF02CA79),
+                                                            fontSize: 11.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                           ),
                                                         ),
                                                       ],
                                                     ),
                                                   ),
+                                                  if (voter.votedAt != null) ...[
+                                                    const SizedBox(height: 4.0),
+                                                    Text(
+                                                      dateTimeFormat(
+                                                        'h:mm a',
+                                                        voter.votedAt,
+                                                      ),
+                                                      style: GoogleFonts.inter(
+                                                        color:
+                                                            theme.secondaryText,
+                                                        fontSize: 11.0,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ],
+                                              ),
+                                            ] else ...[
+                                              SizedBox(
+                                                height: 34.0,
+                                                child: ElevatedButton.icon(
+                                                  onPressed: isUpdating
+                                                      ? null
+                                                      : () async {
+                                                          setState(() {
+                                                            _updatingVoterIds
+                                                                .add(voter.id!);
+                                                          });
+                                                          try {
+                                                            await VotersTable()
+                                                                .update(
+                                                              data: {
+                                                                'has_voted':
+                                                                    true,
+                                                                'marked_by_agent_id':
+                                                                    currentUserUid,
+                                                                'voted_at':
+                                                                    supaSerialize<
+                                                                        DateTime>(
+                                                                  getCurrentTimestamp,
+                                                                ),
+                                                              },
+                                                              matchingRows:
+                                                                  (rows) =>
+                                                                      rows.eqOrNull(
+                                                                'id',
+                                                                voter.id,
+                                                              ),
+                                                            );
+                                                            if (context.mounted) {
+                                                              ScaffoldMessenger.of(
+                                                                      context)
+                                                                  .showSnackBar(
+                                                                SnackBar(
+                                                                  content: Text(
+                                                                    '${voter.fullName} marked as voted.',
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ),
+                                                                  duration:
+                                                                      const Duration(
+                                                                          milliseconds:
+                                                                              3000),
+                                                                  backgroundColor:
+                                                                      const Color(
+                                                                          0xFF02CA79),
+                                                                ),
+                                                              );
+                                                            }
+                                                          } catch (e) {
+                                                            if (context.mounted) {
+                                                              ScaffoldMessenger.of(
+                                                                      context)
+                                                                  .showSnackBar(
+                                                                SnackBar(
+                                                                  content: Text(
+                                                                      'Error marking voter: $e'),
+                                                                  backgroundColor:
+                                                                      const Color(
+                                                                          0xFFE65454),
+                                                                ),
+                                                              );
+                                                            }
+                                                          } finally {
+                                                            if (mounted) {
+                                                              setState(() {
+                                                                _updatingVoterIds
+                                                                    .remove(voter.id);
+                                                                _model.requestCompleter =
+                                                                    null;
+                                                              });
+                                                              await _model
+                                                                  .waitForRequestCompleted();
+                                                            }
+                                                          }
+                                                        },
+                                                  icon: isUpdating
+                                                      ? const SizedBox(
+                                                          width: 14.0,
+                                                          height: 14.0,
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            color: Color(
+                                                                0xFF12151C),
+                                                            strokeWidth: 2.0,
+                                                          ),
+                                                        )
+                                                      : const Icon(
+                                                          Icons
+                                                              .how_to_reg_rounded,
+                                                          color: Color(
+                                                              0xFF12151C),
+                                                          size: 16.0,
+                                                        ),
+                                                  label: Text(
+                                                    'Mark Voted',
+                                                    style: GoogleFonts.inter(
+                                                      color: const Color(
+                                                          0xFF12151C),
+                                                      fontSize: 12.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        const Color(0xFF60CBEE),
+                                                    elevation: 0.0,
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                      horizontal: 12.0,
+                                                    ),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
+                                            ],
                                           ],
                                         ),
-                                      ),
-                                    ],
+                                      );
+                                    },
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildStatChip({
+    required String label,
+    required String value,
+    required Color color,
+    required FlutterFlowTheme theme,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+      decoration: BoxDecoration(
+        color: theme.secondaryBackground,
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(
+          color: theme.alternate,
+          width: 1.0,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            '$label: ',
+            style: GoogleFonts.inter(
+              color: theme.secondaryText,
+              fontSize: 11.5,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            value,
+            style: GoogleFonts.readexPro(
+              color: color,
+              fontSize: 12.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }

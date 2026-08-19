@@ -120,18 +120,33 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: LogoPollmasterWarPageWidget.routeName,
           path: LogoPollmasterWarPageWidget.routePath,
-          builder: (context, params) => LogoPollmasterWarPageWidget(),
+          builder: (context, params) => params.isEmpty
+              ? AdminNavBarPage(initialPage: 'LogoPollmasterWarPage')
+              : AdminNavBarPage(
+                  initialPage: 'LogoPollmasterWarPage',
+                  page: LogoPollmasterWarPageWidget(),
+                ),
         ),
         FFRoute(
           name: DisbursementmanagerpageColumnScrollablePageWidget.routeName,
           path: DisbursementmanagerpageColumnScrollablePageWidget.routePath,
-          builder: (context, params) =>
-              DisbursementmanagerpageColumnScrollablePageWidget(),
+          builder: (context, params) => params.isEmpty
+              ? AdminNavBarPage(
+                  initialPage: 'DisbursementmanagerpageColumnScrollablePage')
+              : AdminNavBarPage(
+                  initialPage: 'DisbursementmanagerpageColumnScrollablePage',
+                  page: DisbursementmanagerpageColumnScrollablePageWidget(),
+                ),
         ),
         FFRoute(
           name: BackToWarPageWidget.routeName,
           path: BackToWarPageWidget.routePath,
-          builder: (context, params) => BackToWarPageWidget(),
+          builder: (context, params) => params.isEmpty
+              ? AdminNavBarPage(initialPage: 'BackToWarPage')
+              : AdminNavBarPage(
+                  initialPage: 'BackToWarPage',
+                  page: BackToWarPageWidget(),
+                ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

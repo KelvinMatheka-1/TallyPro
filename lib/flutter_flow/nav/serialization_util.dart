@@ -97,9 +97,6 @@ String? serializeParam(
 
       case ParamType.SupabaseRow:
         return json.encode((param as SupabaseDataRow).data);
-
-      default:
-        data = null;
     }
     return data;
   } catch (e) {

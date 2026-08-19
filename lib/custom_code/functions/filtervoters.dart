@@ -19,21 +19,16 @@ bool? filtervoters(
   String? fullName,
   String? searchTerm,
 ) {
-  bool filterVoters(
-    String? nationalId,
-    String? fullName,
-    String? searchTerm,
-  ) {
-    // If search bar is empty, show all voters
-    if (searchTerm == null || searchTerm.trim().isEmpty) {
-      return true;
-    }
-
-    final query = searchTerm.toLowerCase().trim();
-    final idMatch = nationalId != null && nationalId.contains(query);
-    final nameMatch =
-        fullName != null && fullName.toLowerCase().contains(query);
-
-    return idMatch || nameMatch;
+  // If search bar is empty, show all voters
+  if (searchTerm == null || searchTerm.trim().isEmpty) {
+    return true;
   }
+
+  final query = searchTerm.toLowerCase().trim();
+  final idMatch =
+      nationionalId != null && nationionalId.toLowerCase().contains(query);
+  final nameMatch =
+      fullName != null && fullName.toLowerCase().contains(query);
+
+  return idMatch || nameMatch;
 }
