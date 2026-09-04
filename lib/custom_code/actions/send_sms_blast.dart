@@ -13,6 +13,11 @@ Future<bool> sendSmsBlast(
   List<String> phoneNumbers,
   String message,
 ) async {
+  if (phoneNumbers.isEmpty) {
+    print('Bulk SMS Warning: No phone numbers provided.');
+    return false;
+  }
+
   try {
     final response = await SupaFlow.client.functions.invoke(
       'send-bulk-sms',

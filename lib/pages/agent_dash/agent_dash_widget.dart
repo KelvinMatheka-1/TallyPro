@@ -245,7 +245,7 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                           ElevatedButton(
                             onPressed: () => Navigator.pop(dialogCtx, true),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFE65454),
+                              backgroundColor: const Color(0xFF151820),
                               elevation: 0.0,
                             ),
                             child: const Text('Log Out'),
@@ -658,7 +658,7 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                                           decoration: BoxDecoration(
                                             color: isCheckedIn
                                                 ? const Color(0x1902CA79)
-                                                : const Color(0x19FB8C10),
+                                                : const Color(0x33FFD939),
                                             borderRadius:
                                                 BorderRadius.circular(10.0),
                                           ),
@@ -668,7 +668,7 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                                                 : Icons.location_searching_rounded,
                                             color: isCheckedIn
                                                 ? const Color(0xFF02CA79)
-                                                : const Color(0xFFFB8C10),
+                                                : const Color(0xFFFFD939),
                                             size: 20.0,
                                           ),
                                         ),
@@ -706,7 +706,7 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                                       decoration: BoxDecoration(
                                         color: isCheckedIn
                                             ? const Color(0x1902CA79)
-                                            : const Color(0x19FB8C10),
+                                            : const Color(0x33FFD939),
                                         borderRadius:
                                             BorderRadius.circular(12.0),
                                       ),
@@ -715,7 +715,7 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                                         style: GoogleFonts.inter(
                                           color: isCheckedIn
                                               ? const Color(0xFF02CA79)
-                                              : const Color(0xFFFB8C10),
+                                              : const Color(0xFFFFD939),
                                           fontSize: 11.5,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -789,7 +789,7 @@ class _AgentDashWidgetState extends State<AgentDashWidget> {
                                                           'Error checking in: $e'),
                                                       backgroundColor:
                                                           const Color(
-                                                              0xFFE65454),
+                                                              0xFF151820),
                                                     ),
                                                   );
                                                 }

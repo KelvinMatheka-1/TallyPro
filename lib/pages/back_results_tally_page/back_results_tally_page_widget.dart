@@ -277,7 +277,7 @@ class _BackResultsTallyPageWidgetState
                             controller: _model.textController2!,
                             focusNode: _model.textFieldFocusNode2!,
                             icon: Icons.highlight_off_rounded,
-                            iconColor: const Color(0xFFE65454),
+                            iconColor: const Color(0xFF151820),
                             theme: theme,
                           ),
                           const SizedBox(height: 12.0),
@@ -290,7 +290,7 @@ class _BackResultsTallyPageWidgetState
                             controller: _model.textController3!,
                             focusNode: _model.textFieldFocusNode3!,
                             icon: Icons.help_outline_rounded,
-                            iconColor: const Color(0xFFFB8C10),
+                            iconColor: const Color(0xFFFFD939),
                             theme: theme,
                           ),
                         ],
@@ -490,8 +490,13 @@ class _BackResultsTallyPageWidgetState
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text(
-                                          'Please enter the Total Valid Votes count.'),
-                                      backgroundColor: Color(0xFFFB8C10),
+                                        'Please enter the Total Valid Votes count.',
+                                        style: TextStyle(
+                                          color: Color(0xFF151820),
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      backgroundColor: Color(0xFFFFD939),
                                     ),
                                   );
                                   return;
@@ -604,7 +609,7 @@ class _BackResultsTallyPageWidgetState
                                         content: Text(
                                             'Error transmitting results: $e'),
                                         backgroundColor:
-                                            const Color(0xFFE65454),
+                                            const Color(0xFF151820),
                                       ),
                                     );
                                   }

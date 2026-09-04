@@ -55,7 +55,7 @@ class _LogRowWidgetState extends State<LogRowWidget> {
     } else if (isQueued) {
       statusColor = const Color(0xFFFFD939);
     } else {
-      statusColor = const Color(0xFFE65454);
+      statusColor = const Color(0xFF151820);
     }
 
     return Container(

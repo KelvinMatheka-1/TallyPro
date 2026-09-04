@@ -88,7 +88,7 @@ class _DisbursementRowWidgetState extends State<DisbursementRowWidget> {
       buttonText = 'Pay';
       buttonTextColor = const Color(0xFF151820);
     } else if (isFailed) {
-      buttonColor = const Color(0xFFE65454);
+      buttonColor = const Color(0xFF151820);
       buttonText = 'Retry';
       buttonTextColor = Colors.white;
     } else {

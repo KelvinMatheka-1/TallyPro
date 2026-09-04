@@ -199,7 +199,7 @@ class _BackToWarPageWidgetState extends State<BackToWarPageWidget> {
                                 value: totalVoters.toString(),
                                 subtitle: 'Registered Voters',
                                 icon: Icons.groups_rounded,
-                                iconColor: const Color(0xFFFB8C10),
+                                iconColor: const Color(0xFFFFD939),
                                 theme: theme,
                               ),
                             ),
@@ -366,30 +366,72 @@ class _BackToWarPageWidgetState extends State<BackToWarPageWidget> {
                                       final phoneNumbers = _model.allVoters!
                                           .map((e) => e.phoneNumber)
                                           .withoutNulls
+                                          .where((p) => p.trim().isNotEmpty)
                                           .toList();
 
-                                      await actions.sendSmsBlast(
+                                      if (phoneNumbers.isEmpty) {
+                                        if (context.mounted) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'No voters with valid phone numbers found to broadcast.',
+                                                style: GoogleFonts.inter(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              backgroundColor:
+                                                  const Color(0xFFE58B00),
+                                              duration:
+                                                  const Duration(seconds: 4),
+                                            ),
+                                          );
+                                        }
+                                        return;
+                                      }
+
+                                      final success = await actions.sendSmsBlast(
                                         phoneNumbers,
                                         text,
                                       );
 
                                       if (context.mounted) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'SMS broadcast dispatched to ${phoneNumbers.length} voters!',
-                                              style: GoogleFonts.inter(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w600,
+                                        if (success) {
+                                          _model.textController?.clear();
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'SMS broadcast dispatched to ${phoneNumbers.length} voters!',
+                                                style: GoogleFonts.inter(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                               ),
+                                              backgroundColor:
+                                                  const Color(0xFF02CA79),
+                                              duration:
+                                                  const Duration(seconds: 4),
                                             ),
-                                            backgroundColor:
-                                                const Color(0xFF02CA79),
-                                            duration:
-                                                const Duration(seconds: 4),
-                                          ),
-                                        );
+                                          );
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Failed to send SMS broadcast. Check SMS gateway credentials.',
+                                                style: GoogleFonts.inter(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              backgroundColor: theme.error,
+                                              duration:
+                                                  const Duration(seconds: 4),
+                                            ),
+                                          );
+                                        }
                                       }
                                     } catch (e) {
                                       if (context.mounted) {

@@ -245,9 +245,14 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
                             if (inputVotes == null) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content:
-                                      Text('Please enter a valid vote count number.'),
-                                  backgroundColor: Color(0xFFFB8C10),
+                                  content: Text(
+                                    'Please enter a valid vote count number.',
+                                    style: TextStyle(
+                                      color: Color(0xFF151820),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  backgroundColor: Color(0xFFFFD939),
                                 ),
                               );
                               return;
@@ -306,7 +311,7 @@ class _CandidateCardWidgetState extends State<CandidateCardWidget> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text('Error saving tally: $e'),
-                                    backgroundColor: const Color(0xFFE65454),
+                                    backgroundColor: const Color(0xFF151820),
                                   ),
                                 );
                               }

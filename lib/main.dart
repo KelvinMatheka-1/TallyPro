@@ -102,10 +102,20 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(
         brightness: Brightness.light,
+        primaryColor: const Color(0xFF02CA79),
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF02CA79),
+          secondary: Color(0xFFFFD939),
+        ),
         useMaterial3: false,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
+        primaryColor: const Color(0xFF02CA79),
+        colorScheme: const ColorScheme.dark(
+          primary: Color(0xFF02CA79),
+          secondary: Color(0xFFFFD939),
+        ),
         useMaterial3: false,
       ),
       themeMode: _themeMode,

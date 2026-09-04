@@ -215,7 +215,7 @@ class _LogoPollmasterWarPageWidgetState
                       ElevatedButton(
                         onPressed: () => Navigator.pop(dialogCtx, true),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFE65454),
+                          backgroundColor: const Color(0xFF151820),
                           elevation: 0.0,
                         ),
                         child: const Text('Sign Out'),
@@ -567,10 +567,10 @@ class _LogoPollmasterWarPageWidgetState
                           rankColor = const Color(0xFFFFD700);
                           rankLabel = '🥇 Leader';
                         } else if (index == 1) {
-                          rankColor = const Color(0xFFC0C0C0);
+                          rankColor = const Color(0xFF02CA79);
                           rankLabel = '🥈 2nd';
                         } else if (index == 2) {
-                          rankColor = const Color(0xFFCD7F32);
+                          rankColor = const Color(0xFFFFD939);
                           rankLabel = '🥉 3rd';
                         } else {
                           rankColor = theme.secondaryText;
@@ -685,8 +685,8 @@ class _LogoPollmasterWarPageWidgetState
                                     index == 0
                                         ? theme.primary
                                         : (index == 1
-                                            ? const Color(0xFF02CA79)
-                                            : const Color(0xFFFB8C10)),
+                                            ? const Color(0xFFFFD939)
+                                            : const Color(0xFF02CA79)),
                                   ),
                                 ),
                               ),
@@ -850,7 +850,7 @@ class _LogoPollmasterWarPageWidgetState
                           statusColor = const Color(0xFFFFD939);
                           statusLabel = 'Agent Present';
                         } else {
-                          statusColor = const Color(0xFFFB8C10);
+                          statusColor = const Color(0xFFFFD939);
                           statusLabel = 'Pending';
                         }
 

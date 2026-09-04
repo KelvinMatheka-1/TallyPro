@@ -252,7 +252,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                               _buildStatChip(
                                 label: 'Pending',
                                 value: '$pendingCount',
-                                color: const Color(0xFFFB8C10),
+                                color: const Color(0xFFFFD939),
                                 theme: theme,
                               ),
                               const Spacer(),
@@ -614,7 +614,7 @@ class _VoterSearchPageWidgetState extends State<VoterSearchPageWidget>
                                                                       'Error marking voter: $e'),
                                                                   backgroundColor:
                                                                       const Color(
-                                                                          0xFFE65454),
+                                                                          0xFF151820),
                                                                 ),
                                                               );
                                                             }

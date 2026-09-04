@@ -66,7 +66,7 @@ class _ResultcardWidgetState extends State<ResultcardWidget> {
                 width: 4.0,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xFF4B39EF),
+                  color: FlutterFlowTheme.of(context).primary,
                   borderRadius: BorderRadius.circular(4.0),
                 ),
               ),
@@ -87,7 +87,7 @@ class _ResultcardWidgetState extends State<ResultcardWidget> {
                                     .bodyMedium
                                     .fontStyle,
                               ),
-                              color: Color(0xFF4B39EF),
+                              color: FlutterFlowTheme.of(context).primary,
                               fontSize: 14.0,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w500,
